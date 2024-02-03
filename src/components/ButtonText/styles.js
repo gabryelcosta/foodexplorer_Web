@@ -7,9 +7,9 @@ export const Container = styled.button`
       return theme.COLORS.GRAY_900;
     }
     if (theme.title === 'light') {
-      return $isactive ? theme.COLORS.GRAY_800 : theme.COLORS.TT_BUTTONTEXT;
+      return $isactive ? theme.COLORS.TT_BUTTONTEXT : theme.COLORS.TT_BUTTONTEXT;
     } else {
-      return $isactive ? theme.COLORS.GRAY_800 : theme.COLORS.TT_BUTTONTEXT;
+      return $isactive ? theme.COLORS.TT_BUTTONTEXT : theme.COLORS.TT_BUTTONTEXT;
     }
   }};
 

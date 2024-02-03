@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 export const Container = styled.button`
   width: 100%;
-  color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.GREEN_900 : theme.COLORS.TT_BUTTON};
-  background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_860 : theme.BACKGROUND.BT_DEFAULT};
+  color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_BUTTON : theme.COLORS.TT_BUTTON};
+  background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_DEFAULT : theme.BACKGROUND.BT_DEFAULT};
 
   height: 2.4rem;
   border: 0;

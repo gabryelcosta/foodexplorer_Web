@@ -25,13 +25,23 @@ export function useNavigation(){
     navigate('/perfil');
   }
 
+    // Função para ir para a página de edição do prato
+    function goEditPage(){
+      navigate('/editar');
+    }
 
+    // Função para ir para a página de novo prato
+    function goNewDishePage(){
+      navigate('/novoprato');
+    }
 
   // Retorna todas as funções de navegação
   return {
     goBack,
     goToHomePage,
     goProfilePage,
-    goRegisterPage
+    goRegisterPage,
+    goEditPage,
+    goNewDishePage
   };
 }

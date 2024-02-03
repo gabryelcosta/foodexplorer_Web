@@ -1,5 +1,5 @@
 import { Container, Header, FormLogin } from './styles';
-import Polygon from '../../components/PolygonSVG';
+import Polygon from '../../components/Icons/PolygonSVG';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { ButtonText } from '../../components/ButtonText';
@@ -48,6 +48,7 @@ export function Login(){
           <label>
             <p>Email</p>
             <Input
+              type="email"
               placeholder="Exemplo: exemplo@exemplo.com.br"
               value={email}
               onChange={e => setEmail(e.target.value)}

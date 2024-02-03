@@ -4,7 +4,7 @@ export const Container = styled.div`
   max-width: 100vw;
   min-height: 100vh;
   display: inline-block;
-  background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_900 : theme.BACKGROUND.BG_PAGE};
+  background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_PAGE : theme.BACKGROUND.BG_PAGE};
 
   @media(max-width: 320px){
   width: 100vw;
@@ -30,13 +30,13 @@ export const Header = styled.div `
       height: 4rem;
 
       path {
-        fill: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_900 : theme.COLORS.SVG_POLYGON_HEADER};
+        fill: ${({ theme }) => theme.title === 'light' ? theme.COLORS.SVG_POLYGON_HEADER : theme.COLORS.SVG_POLYGON_HEADER};
       }
     }
 
     > h1 {
-      color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_900 : theme.COLORS.TT_DEFAULT};
-      font-family: ${({ theme }) => theme.FONTS_LOGIN_TITLE};
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_DEFAULT : theme.COLORS.TT_DEFAULT};
+      font-family: ${({ theme }) => theme.FONTS.FONTS_LOGIN_TITLE};
     }
   }
 
@@ -56,8 +56,8 @@ export const Header = styled.div `
         height: 2rem;
 
       > h1 {
-        color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_900 : theme.COLORS.TT_DEFAULT};
-        font-family: ${({ theme }) => theme.FONTS_LOGIN_TITLE};
+        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_DEFAULT : theme.COLORS.TT_DEFAULT};
+        font-family: ${({ theme }) => theme.FONTS.FONTS_LOGIN_TITLE};
       }
     }
   }
@@ -82,8 +82,8 @@ export const FormLogin = styled.form`
       font-style: normal;
       font-weight: 400;
       line-height: 100%;
-      font-family: ${({ theme }) => theme.FONTS_LOGIN_TITLE};
-      color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_900 : theme.COLORS.TT_LOGIN_TITLE};
+      font-family: ${({ theme }) => theme.FONTS.FONTS_LOGIN_TITLE};
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_LOGIN_TITLE : theme.COLORS.TT_LOGIN_TITLE};
       > p {
         margin-bottom: .8rem;
       }
@@ -93,7 +93,7 @@ export const FormLogin = styled.form`
       font-size: 1.6rem;
       font-weight: 500;
       opacity: 0.6;
-      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.GREEN_900 : theme.COLORS.TT_PLACEHOLDER};
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_PLACEHOLDER : theme.COLORS.TT_PLACEHOLDER};
   }
 }
 
@@ -112,8 +112,8 @@ export const FormLogin = styled.form`
       font-style: normal;
       font-weight: 400;
       line-height: 100%;
-      font-family: ${({ theme }) => theme.FONTS_LOGIN_TITLE};
-      color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BGL_900 : theme.COLORS.TT_LOGIN_TITLE};
+      font-family: ${({ theme }) => theme.FONTS.FONTS_LOGIN_TITLE};
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_LOGIN_TITLE : theme.COLORS.TT_LOGIN_TITLE};
       > p {
         margin-bottom: .5rem;
       }
@@ -123,7 +123,7 @@ export const FormLogin = styled.form`
       font-size: 1.2rem;
       font-weight: 500;
       opacity: 0.6;
-      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.GREEN_900 : theme.COLORS.TT_PLACEHOLDER};
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_PLACEHOLDER : theme.COLORS.TT_PLACEHOLDER};
   }
 }
 
