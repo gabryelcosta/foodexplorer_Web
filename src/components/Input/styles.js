@@ -16,7 +16,7 @@ export const Container = styled.div`
     background: transparent;
     border: 0;
     margin-left: .5rem;
-    color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.COLORS.TT_PLACEHOLDER: theme.COLORS.TT_PLACEHOLDER};
+    color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_PLACEHOLDER: theme.COLORS.TT_PLACEHOLDER};
 
     > svg {
       margin-left: 1.6rem;

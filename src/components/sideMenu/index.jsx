@@ -5,22 +5,17 @@ import { Input } from '../Input';
 import SearchSVG from '../Icons/SearchSVG';
 import { USER_ROLE } from '../../utils/roles';
 import { useAuth } from '../../hooks/auth';
-import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { ButtonText } from '../ButtonText';
 import { useNavigation } from '../../hooks/useNavigate';
-import Polygon from '../Icons/PolygonSVG';
 import { Footer } from '../Footer'
+import { useContext } from 'react';
+import { MenuContext } from '../../context/MenuContext'
 
 
-export function SideMenu({ menuIsOpen, onCloseMenu }){
-  // Estado para controlar o botão ativo
-  const [activeButton, setActiveButton] = useState(null);
+export function SideMenu(){
     // Obtenha os dados do usuário do contexto de autenticação
     const { user, signOut } = useAuth();
-
-    // Obtenha a localização atual do hook useLocation
-    const location = new useLocation();
+    const { menuIsOpen, toggleMenu } = useContext(MenuContext);
 
     // Obtenha os métodos de navegação do hook de navegação
     const { goToHomePage, goNewDishePage } = useNavigation();
@@ -28,33 +23,14 @@ export function SideMenu({ menuIsOpen, onCloseMenu }){
     function handleSignOut(){
       signOut();
       goToHomePage();
+      toggleMenu();
     }
-
-  // Efeito para definir o botão ativo com base na localização atual
-  useEffect(() => {
-    const pathname = location.pathname;
-      if(pathname === '/'){
-        setActiveButton(null);
-      } else if (pathname.startsWith('/clientes')){
-        setActiveButton('clients');
-      } else if (pathname.startsWith('/fornecedores')){
-        setActiveButton('suppliers');
-      } else if (pathname.startsWith('/ordemdeservicos')){
-        setActiveButton('serviceorders');
-      } else if (pathname.startsWith('/equipamentos')){
-        setActiveButton('equipments');
-      } else if (pathname.startsWith('/usuarios')){
-        setActiveButton('user')
-      }
-
-  }, [location.pathname])
-
     return(
         <Container data-menu-is-open={menuIsOpen}>
           <Header>
             <div>
               {menuIsOpen &&
-                <Button onClick={onCloseMenu}>
+                <Button onClick={toggleMenu}>
                   <CloseSVG />
                 </Button>
               }

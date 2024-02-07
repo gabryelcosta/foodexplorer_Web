@@ -22,7 +22,7 @@ function AuthProvider({ children }){
       localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
 
       // Atualiza o estado com os dados do usuário
-      setData({ user });
+      setData({ user: user });
 
     } catch(error){
       // Define o estado de erro com a mensagem de erro da resposta ou uma mensagem padrão
@@ -59,6 +59,11 @@ function AuthProvider({ children }){
     }
   }
 
+  const updateUser = (updatedUser) => {
+    setData({ user: updatedUser });
+    localStorage.setItem("@foodexplorer:user", JSON.stringify(updatedUser));
+  };
+
   // Busca os dados do usuário do local storage quando o componente é montado
   useEffect(() => {
     const user = localStorage.getItem("@foodexplorer:user");
@@ -72,7 +77,7 @@ function AuthProvider({ children }){
   // Retorna o provedor de contexto de autenticação
   return (
     <div>
-      <AuthContext.Provider value={{ signIn, signOut, updateProfile, user: data.user, error, profileUpdateMessage }}>
+      <AuthContext.Provider value={{ signIn, signOut, updateProfile, user: data.user, error, profileUpdateMessage, updateUser }}>
         {children}
       </AuthContext.Provider>
     </div>

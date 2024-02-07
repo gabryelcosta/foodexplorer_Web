@@ -9,16 +9,13 @@ export default createGlobalStyle`
 
   :root {
     font-size: 62.5%;
-    font-family: ${({ theme }) => theme.FONTS.FONT_1};
   }
 
   body {
-    background-color: ${({ theme }) => theme.BACKGROUND.BG_900};
     -webkit-font-smoothing: antialiased;
   }
 
   body, input, button, textarea {
-    font-family: ${({ theme }) => theme.FONTS.FONT_1};
     font-size: 1.6rem;
     outline: none;
   }

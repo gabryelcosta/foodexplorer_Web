@@ -4,16 +4,19 @@ import menuSvg from '../../assets/Icons/Menu.svg';
 import Receipt from '../../components/Icons/ReceiptSVG';
 import { USER_ROLE } from '../../utils/roles';
 import { useAuth } from '../../hooks/auth';
+import { useContext } from 'react';
+import { MenuContext } from '../../context/MenuContext';
 
-export function Header({ onOpenMenu }){
+export function Header(){
   const { user } = useAuth();
+  const { toggleMenu } = useContext(MenuContext); // Obtenha toggleMenu do MenuContext
 
   return (
     <Container>
       {[USER_ROLE.USUARIO].includes(user.role) &&
       <>
         <div className="container">
-          <Menu onClick={onOpenMenu}>
+          <Menu onClick={toggleMenu}>
             <img src={menuSvg}/>
           </Menu>
           <div className='container_title'>
@@ -30,7 +33,7 @@ export function Header({ onOpenMenu }){
       {[USER_ROLE.ADMIN].includes(user.role) &&
       <>
       <div className="container">
-        <Menu onClick={onOpenMenu}>
+        <Menu onClick={toggleMenu}>
           <img src={menuSvg}/>
         </Menu>
         <div className='container_title'>
@@ -44,7 +47,7 @@ export function Header({ onOpenMenu }){
       {[USER_ROLE.SALE].includes(user.role) &&
       <>
       <div className="container">
-        <Menu onClick={onOpenMenu}>
+        <Menu onClick={toggleMenu}>
           <img src={menuSvg}/>
         </Menu>
         <div className='container_title'>

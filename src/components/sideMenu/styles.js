@@ -8,8 +8,8 @@ export const Container = styled.aside`
   "Content"
   "Footer";
   grid-template-rows: 11.4rem 1fr;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   z-index: 1;
 
