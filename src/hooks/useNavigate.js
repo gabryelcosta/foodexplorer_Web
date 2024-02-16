@@ -22,24 +22,28 @@ export function useNavigation(){
   // Função para ir para a página inicial
   function goToHomePage(){
     navigate('/');
-    toggleMenu();
   }
 
   // Função para ir para a página de perfil
-  function goProfilePage(){
+  function goProfilePage(event){
+    event.stopPropagation();
     navigate('/perfil');
+    toggleMenu();
   }
 
     // Função para ir para a página de edição do prato
     function goEditPage(){
       navigate('/editar');
-      toggleMenu();
     }
 
     // Função para ir para a página de novo prato
     function goNewDishePage(){
       navigate('/novoprato');
       toggleMenu();
+    }
+
+    function goToDetailsDishe(){
+      navigate('/detalhes');
     }
 
   // Retorna todas as funções de navegação
@@ -50,5 +54,6 @@ export function useNavigation(){
     goRegisterPage,
     goEditPage,
     goNewDishePage,
+    goToDetailsDishe,
   };
 }

@@ -28,7 +28,7 @@ export function SideMenu(){
     return(
         <Container data-menu-is-open={menuIsOpen}>
           <Header>
-            <div>
+            <div className="container_menu">
               {menuIsOpen &&
                 <Button onClick={toggleMenu}>
                   <CloseSVG />
@@ -36,7 +36,7 @@ export function SideMenu(){
               }
               <h2>Menu</h2>
             </div>
-            <ProfileImagem />
+              <ProfileImagem />
           </Header>
           <Content>
               <Input icon={SearchSVG} placeholder="Busque por pratos ou ingredientes" className="input_search"/>

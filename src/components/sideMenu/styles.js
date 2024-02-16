@@ -29,13 +29,13 @@ export const Header = styled.header`
   grid-area: Header;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 11.4rem;
   background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_MENU_HEADER : theme.BACKGROUND.BG_MENU_HEADER};
   padding: 5.6rem 2.8rem 2.4rem;
 
-  div {
+  .container_menu {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -60,6 +60,10 @@ export const Button = styled.button`
   svg {
     width: 1.8rem;
     height: 1.8rem;
+
+    > path {
+      fill: ${({ theme }) => theme.title === 'light' ? theme.COLORS.SVG_SIDEMENU_CLOSEICON : theme.COLORS.SVG_SIDEMENU_CLOSEICON};
+    }
   }
 `
 
@@ -75,12 +79,12 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     margin: 3.6rem auto;
+    z-index: 1;
   }
 
   ::-webkit-input-placeholder {
       font-size: 1.6rem;
       font-weight: 500;
-      opacity: 0.6;
       color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_PLACEHOLDER : theme.COLORS.TT_PLACEHOLDER};
   }
 

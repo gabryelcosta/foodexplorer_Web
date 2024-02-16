@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-rows: 11.4rem 1fr;
+  grid-template-rows: 20rem 1fr;
   grid-template-areas:
   "Header"
   "Main"
@@ -12,24 +12,28 @@ export const Container = styled.div`
   background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_PAGE : theme.BACKGROUND.BG_PAGE};
 `
 
-export const Content = styled.form`
-  grid-area: Main;
+export const Header = styled.header`
+  grid-area: Header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  overflow-y: scroll;
+  height: 20rem;
+  background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_MENU_HEADER : theme.BACKGROUND.BG_MENU_HEADER};
+  padding: 5.6rem 2.8rem 2.4rem;
 
   .nav_text {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 3.4rem;
-    margin: 1rem 0rem 2.4rem 2.4rem;
+    margin-top: -3rem;
 
     button {
       font-size: 1.6rem;
       font-weight: 500;
       line-height: 23rem;
-      font-family: ${({ theme }) => theme.FONTS.FONTS_DETALHES_NAV_TITLE};
-      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_DETALHES_NAV_TITLE : theme.COLORS.TT_DETALHES_NAV_TITLE};
+      font-family: ${({ theme }) => theme.FONTS.FONTS_PROFILE_NAV_TITLE};
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_PROFILE_NAV_TITLE : theme.COLORS.TT_PROFILE_NAV_TITLE};
 
         svg {
         width: 2.2rem;
@@ -37,132 +41,72 @@ export const Content = styled.form`
       }
     }
   }
+`
 
-  .edit_contet {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    width: 36.4rem;
-    margin: 0 auto;
+export const Avatar = styled.div`
+  position: relative;
+  margin: -12.4rem auto 3.2rem;
 
-    h2 {
-        font-size: 3.2rem;
-        font-weight: 500;
-        line-height: 4.4rem;
-        font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_NAV_TITLE};
-        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_NAV_TITLE : theme.COLORS.TT_EDIT_NAV_TITLE};
+  width: 18.6rem;
+  height: 18.6rem;
 
-        margin-bottom: 2.4rem;
-      }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    width: 100%;
-
-    .container_tags {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      width: 36.4rem;
-      height: 4.8rem;
-      padding: .8rem;
-      gap: 1.6rem;
-      border-radius: .8rem;
-      background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
-
-      div {
-        width: 100%;
-        max-width: 12.5rem;
-        height: 3.2rem;
-        border-radius: .8rem;
-
-        input {
-          max-width: 9.5rem;
-          padding: .8rem 0rem .8rem 1.6rem;
-          font-size: 1.6rem;
-          font-weight: 400;
-          line-height: 1.6rem;
-          font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_TAG_TEXT};
-        }
-
-        button {
-          width: 2rem;
-          height: 2rem;
-          background: transparent;
-        }
-      }
-
-      button {
-        background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
-      }
-    }
-
-    .container_label {
-      div {
-        padding: 1.5rem 1.4rem;
-        border-radius: .8rem;
-        background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
-
-        input {
-          font-size: 1.6rem;
-          font-weight: 400;
-          line-height: 1.6rem;
-          font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_INPUT_TEXT};
-          color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_INPUT_TEXT : theme.COLORS.TT_EDIT_INPUT_TEXT};
-        }
-      }
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .8rem;
-      height: 4.8rem;
-      background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
-
-      svg {
-        width: 2rem;
-        height: 2rem;
-      }
-    }
-
-    span {
-      font-size: 1.6rem;
-      font-weight: 400;
-      font-weight: 400;
-      line-height: 1.6rem;
-      font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_CONTENT_SUBTITLE};
-      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_CONTENT_SUBTITLE : theme.COLORS.TT_EDIT_CONTENT_SUBTITLE};
-    }
+  img {
+    width: 18.6rem;
+    height: 18.6rem;
+    border-radius: 50%;
+    border: none;
   }
 
-  textarea {
-    height: 17.2rem;
-    border-radius: .8rem;
-  }
+  > label {
+    width: 4.8rem;
+    height: 4.8rem;
 
-  .btn_container {
+    background-color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_PROFILE_CAMERA : theme.BACKGROUND.BG_PROFILE_CAMERA};
+    border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3.2rem;
-    margin-bottom: 5.3rem;
 
-    .btn_submit {
-      height: 4.8rem;
-      padding: 1.2rem 2.4rem;
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
 
-      border-radius: .5rem;
-      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_DEFAULT : theme.COLORS.TT_DEFAULT};
-      background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_DISABLE : theme.BACKGROUND.BT_DISABLE};
+    cursor: pointer;
 
-      font-size: 1.4rem;
-      font-weight: 500;
-      line-height: 2.4rem;
+    input {
+      display: none;
+    }
+
+    svg {
+      width: 2rem;
+      height: 2rem;
+      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.SVG_PROFILE_CAMERA : theme.COLORS.SVG_PROFILE_CAMERA};
     }
   }
-}
+`
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  margin: 3rem auto;
+  height: 4rem;
+  gap: .5rem;
+
+  input {
+    height: 2.2rem;
+    border-radius: .5rem;
+  }
+
+  > div:nth-child(4){
+    margin-top: 2.4rem;
+  }
+
+  button {
+    margin-top: 2.4rem;
+    height: 4.8rem;
+    padding: 1.4rem 2.4rem;
+    border-radius: .5rem;
+  }
 `

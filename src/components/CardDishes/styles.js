@@ -39,6 +39,14 @@ export const CardContainer = styled.section`
         right: 1rem;
         top: 1rem;
       }
+
+      .svg_pencil {
+        position: absolute;
+        width: 2.4rem;
+        height: 2.2rem;
+        right: 1rem;
+        top: 1rem;
+      }
     }
 
     .card_description {
@@ -80,6 +88,38 @@ export const CardContainer = styled.section`
         align-items: center;
       }
     }
+  }
+
+  .card_description_admin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 3rem auto;
+      gap: 1rem;
+
+      > img {
+        border-radius: 5rem;
+        width: 8rem;
+        height: 8rem;
+      }
+
+      h3 {
+        font-family: ${({ theme }) => theme.FONTS.FONTS_CARD_TITLE};
+        font-size: 1.4rem;
+        font-weight: 500;
+        font-style: normal;
+        line-height: 2.4rem;
+        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_TITLE : theme.COLORS.TT_CARD_TITLE};
+      }
+
+      p {
+        font-family: ${({ theme }) => theme.FONTS.FONTS_CARD_MONEY};
+        font-size: 1.6rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 100%;
+        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_MONEY : theme.COLORS.TT_CARD_MONEY};
+      }
   }
 }
 `

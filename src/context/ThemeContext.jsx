@@ -11,8 +11,13 @@ export function ThemeProvider({ children }) {
     setTheme(newTheme);
   };
 
+  // Não renderiza os filhos até que o tema seja definido
+  if (theme === null) {
+    return null;
+  }
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -21,6 +26,6 @@ export function ThemeProvider({ children }) {
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) throw new Error('useTheme must be used within a ThemeProvider');
-  const { theme, toggleTheme } = context;
-  return { theme, toggleTheme };
+  const { theme, toggleTheme, setTheme } = context; // Adicione setTheme aqui
+  return { theme, toggleTheme, setTheme }; // E aqui
 }
