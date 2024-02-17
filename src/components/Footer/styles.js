@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Container = styled.footer`
   grid-area: Footer;
@@ -46,5 +47,33 @@ export const Container = styled.footer`
         line-height: normal;
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_FOOTER_SUBTITLE : theme.COLORS.TT_FOOTER_SUBTITLE};
       }
+  }
+
+  @media (min-width: ${DEVICE_BREAKPOINTS.MD}) {
+    height: 7.7rem;
+
+    .footer_content {
+      padding: 2.5rem 12.3rem;
+      justify-content: space-between;
+
+      > div {
+        gap: 1rem;
+
+        > svg {
+          width: 3rem;
+          height: 3rem;
+        }
+
+        > h4 {
+        font-size: 2.4rem;
+        line-height: 2.8rem;
+        }
+
+        > p {
+          font-size: 1.4rem;
+          line-height: 22rem;
+        }
+      }
+    }
   }
 `

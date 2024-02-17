@@ -9,12 +9,13 @@ import { useContext } from 'react';
 import { MenuContext } from '../../context/MenuContext';
 import { Dropdown } from './styles'
 import { ButtonText } from '../ButtonText'
+import LogoutSVG from '../Icons/LogoutSVG';
 
 export function DropdownContent() {
   const { dropdownIsActive } = useContext(MenuContext);
   const { goProfilePage } = useNavigation();
   const { theme, toggleTheme } = useTheme();
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
   const [userThemePreference, setUserThemePreference] = useState(user.theme_preference);
 
   const handleToggleTheme = (event) => {
@@ -35,14 +36,25 @@ export function DropdownContent() {
       </li>
       <li>
       <div className="container_theme" onClick={(e) => e.stopPropagation()}>
-        <span>Tema Escuro</span>
-        <ToggleSwitch
-          checked={userThemePreference === 'dark'}
-          onChange={(e) => {
-            e.stopPropagation();
-            handleToggleTheme(e);
-          }}
-        />
+        <div onClick={(e) => {
+          e.stopPropagation();
+          handleToggleTheme(e);
+        }}>
+          <p>Tema Escuro</p>
+          <ToggleSwitch
+            checked={userThemePreference === 'dark'}
+            onChange={(e) => {
+              e.stopPropagation();
+              handleToggleTheme(e);
+            }}
+          />
+        </div>
+      </div>
+      </li>
+      <li className="desktop_logout">
+        <div onClick={signOut}>
+          <LogoutSVG className="svg_logout"/>
+          <p>Sair</p>
         </div>
       </li>
     </Dropdown>

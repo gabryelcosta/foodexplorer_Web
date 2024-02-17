@@ -28,7 +28,6 @@ export function useNavigation(){
   function goProfilePage(event){
     event.stopPropagation();
     navigate('/perfil');
-    toggleMenu();
   }
 
     // Função para ir para a página de edição do prato
@@ -39,7 +38,6 @@ export function useNavigation(){
     // Função para ir para a página de novo prato
     function goNewDishePage(){
       navigate('/novoprato');
-      toggleMenu();
     }
 
     function goToDetailsDishe(){

@@ -58,4 +58,85 @@ export const Content = styled.main`
       }
     }
   }
+
+  @media (min-width: ${DEVICE_BREAKPOINTS.MD}) {
+    .banner {
+      width: calc(100vw - 13rem);
+      height: 20rem;
+      margin: 10rem auto 6.2rem;
+
+      > img {
+        width: 40rem;
+        height: 25rem;
+        position: relative;
+        top: -5rem;
+        left: -5.9rem;
+      }
+
+      > div {
+        justify-content: center;
+        h2 {
+          font-size: 2.8rem;
+        }
+
+        p {
+          font-size: 1.4rem;
+        }
+      }
+  }
+}
+
+@media (min-width: ${DEVICE_BREAKPOINTS.LG}) {
+    .banner {
+      width: calc(100vw - 18rem);
+      height: 20rem;
+      margin: 13rem auto 6.2rem;
+
+      > img {
+        width: 55rem;
+        height: 30rem;
+        position: relative;
+        top: -10rem;
+        left: -8.9rem;
+      }
+
+      > div {
+        justify-content: center;
+        h2 {
+          font-size: 3rem;
+        }
+
+        p {
+          font-size: 1.4rem;
+        }
+      }
+    }
+}
+
+@media (min-width: ${DEVICE_BREAKPOINTS.XL}) {
+    .banner {
+      width: calc(100vw - 22rem);
+      height: 26rem;
+      margin: 17.2rem auto 6.2rem;
+
+      > img {
+        width: 65rem;
+        height: 41.2rem;
+        position: relative;
+        top: -15.2rem;
+        left: -11.5rem;
+      }
+
+      > div {
+        justify-content: center;
+        h2 {
+          font-size: 4rem;
+        }
+
+        p {
+          font-size: 1.6rem;
+        }
+      }
+  }
+}
 `

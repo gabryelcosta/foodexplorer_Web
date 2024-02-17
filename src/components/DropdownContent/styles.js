@@ -1,13 +1,13 @@
 import styled from 'styled-components'
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Dropdown = styled.ul`
   li {
-    padding: 1.3rem 1.2rem;
+    padding: 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: .5rem;
     align-items: flex-start;
-    width: 100%;
 
     svg {
     width: 2rem;
@@ -19,8 +19,7 @@ export const Dropdown = styled.ul`
       height: 2rem;
     }
 
-    span {
-    width: 100%;
+    p {
     font-size: 1.4rem;
     font-weight: 500;
     line-height: 100%;
@@ -31,11 +30,16 @@ export const Dropdown = styled.ul`
   .container_theme {
     display: flex;
     align-items: center;
-    width: 100%;
+    cursor: pointer;
 
     div {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
+
+      div {
+        width: 12.5rem;
+      }
     }
 
     .switch {
@@ -64,5 +68,30 @@ export const Dropdown = styled.ul`
       color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_TOGGLE_BUTTON_ICON : theme.BACKGROUND.BG_TOGGLE_BUTTON_ICON};
     }
   }
+}
+
+.desktop_logout {
+    display: none;
+}
+
+@media (min-width: ${DEVICE_BREAKPOINTS.MD}) {
+  .desktop_logout {
+    display: flex;
+    align-items: flex-start;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+
+      .svg_logout {
+        svg {
+          width: 3rem;
+          height: 3rem;
+        }
+      }
+    }
   }
+}
 `

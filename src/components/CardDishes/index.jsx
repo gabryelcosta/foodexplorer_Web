@@ -38,13 +38,33 @@ export function CardPratos(){
   useEffect(() => {
     const options = {
       perPage: 2,
+      perMove: 1,
+      focus: 'center',
       rewind: true,
       arrows: false,
       pagination: false,
     };
-    new Splide('.splide', options).mount();
-    new Splide('.card_pratos_principais .splide', options).mount();
-    new Splide('.card_pratos_sobremesa .splide', options).mount();
+
+    const splide = new Splide('.splide', options).mount();
+    const splidePratosPrincipais = new Splide('.card_pratos_principais .splide', options).mount();
+    const splidePratosSobremesa = new Splide('.card_pratos_sobremesa .splide', options).mount();
+
+
+    const handleResize = () => {
+      const shouldShowArrows = window.innerWidth >= 768;  // ajuste este valor conforme necessário
+      const shouldDisableDrag = window.innerWidth >= 768;  // ajuste este valor conforme necessário
+
+      splide.options = { ...splide.options, arrows: shouldShowArrows, drag: !shouldDisableDrag };
+      splidePratosPrincipais.options = { ...splidePratosPrincipais.options, arrows: shouldShowArrows, drag: !shouldDisableDrag };
+      splidePratosSobremesa.options = { ...splidePratosSobremesa.options, arrows: shouldShowArrows, drag: !shouldDisableDrag };
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();  // chame a função uma vez para definir a opção `arrows` e `drag` corretamente na inicialização
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return(

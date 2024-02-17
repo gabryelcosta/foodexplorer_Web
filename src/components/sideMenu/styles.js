@@ -13,7 +13,7 @@ export const Container = styled.aside`
   position: absolute;
   z-index: 1;
 
-  transform: translateX(-100%);
+  transform: translateX(-130%);
   transition: transform 0.3s ease-in-out;
 
   background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_MENU : theme.BACKGROUND.BG_MENU};

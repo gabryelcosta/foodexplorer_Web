@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const CardContainer = styled.section`
   margin-top: 6rem;
@@ -10,7 +11,7 @@ export const CardContainer = styled.section`
   > h2 {
     font-size: 1.8rem;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 140%;
     font-family: ${({ theme }) => theme.FONTS.FONTS_CARD_TITLE};
     color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_TITLE : theme.COLORS.TT_CARD_TITLE};
@@ -23,8 +24,8 @@ export const CardContainer = styled.section`
   }
 
   .splide__slide {
-    width: 21rem;
-    height: 25rem;
+    width: 21rem !important;
+    height: 25rem !important;
     background-color: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_CARD : theme.BACKGROUND.BG_CARD};
     border: .1rem solid ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BORDER_CARD : theme.BACKGROUND.BORDER_CARD};
     border-radius: .8rem;
@@ -120,6 +121,85 @@ export const CardContainer = styled.section`
         line-height: 100%;
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_MONEY : theme.COLORS.TT_CARD_MONEY};
       }
+  }
+}
+
+@media (min-width: ${DEVICE_BREAKPOINTS.MD}) {
+  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+    width: calc(100vw - 13rem);
+    margin: 6.3rem auto;
+
+    > h2 {
+      font-size: 3.2rem;
+      line-height: 4.5rem;
+    }
+
+    .splide__slide:not(.is-active) {
+      opacity: 0.5;  // ajuste este valor conforme necessário
+    }
+
+    .splide__list {
+      gap: 2.7rem;
+    }
+
+    .splide__slide {
+      width: 30.4rem !important;
+      height: 46.2rem !important;
+
+        > .card {
+          padding: 6.65rem;
+
+          .svg_heart {
+            position: absolute;
+            width: 2.4rem;
+            height: 2.4rem;
+            right: 2rem;
+            top: 2rem;
+          }
+
+          .svg_pencil {
+            position: absolute;
+            width: 2.4rem;
+            height: 2.4rem;
+            right: 2rem;
+            top: 2rem;
+          }
+        }
+
+        .card_description {
+          gap: 1.5rem;
+          > img {
+            width: 17.6rem;
+            height: 17.6rem;
+          }
+        }
+
+        .card_description_admin {
+          gap: 1.5rem;
+
+          > img {
+            width: 17.6rem;
+            height: 17.6rem;
+          }
+
+          h3 {
+            font-size: 2.4rem;
+            line-height: 3.36rem;
+          }
+        }
+    }
+  }
+}
+
+@media (min-width: ${DEVICE_BREAKPOINTS.LG}) {
+  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+    width: calc(100vw - 18rem);
+  }
+}
+
+@media (min-width: ${DEVICE_BREAKPOINTS.XL}) {
+  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+    width: calc(100vw - 22rem);
   }
 }
 `
