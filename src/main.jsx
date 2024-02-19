@@ -16,11 +16,11 @@ export function App() {
     <React.StrictMode>
       <StyledThemeProvider theme={theme === 'light' ? light : dark}>
         <GlobalStyles />
-        <AuthProvider>
-          <MenuProvider>
-            <Routes />
-          </MenuProvider>
-        </AuthProvider>
+          <AuthProvider>
+            <MenuProvider>
+              <Routes />
+            </MenuProvider>
+          </AuthProvider>
       </StyledThemeProvider>
     </React.StrictMode>
   );

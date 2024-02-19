@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext'; // Certifique-se de importar o useTheme
 
+
 // Cria um contexto de autenticação
 const AuthContext = createContext({});
 
@@ -14,8 +15,6 @@ function AuthProvider({ children }){
   const [profileUpdateMessage, setProfileUpdateMessage] = useState(null);
   const { theme, setTheme } = useTheme();
 
-
-// Função para realizar o login do usuário
 // Função para realizar o login do usuário
 async function signIn({ email, password }){
   setError(null); // Limpa o estado de erro

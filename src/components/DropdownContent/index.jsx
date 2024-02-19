@@ -12,7 +12,7 @@ import { ButtonText } from '../ButtonText'
 import LogoutSVG from '../Icons/LogoutSVG';
 
 export function DropdownContent() {
-  const { dropdownIsActive } = useContext(MenuContext);
+  const { dropdownIsActive, toggleDropdown } = useContext(MenuContext);
   const { goProfilePage } = useNavigation();
   const { theme, toggleTheme } = useTheme();
   const { user, updateUser, signOut } = useAuth();
@@ -29,10 +29,17 @@ export function DropdownContent() {
       });
   };
 
+  function handleSignOut(){
+    signOut();
+    if(dropdownIsActive){
+      toggleDropdown();
+    }
+  }
+
   return dropdownIsActive ? (
     <Dropdown>
       <li onClick={(e) => e.stopPropagation()}>
-          <ButtonText onClick={goProfilePage} title="Editar perfil"/>
+          <ButtonText onClick={goProfilePage} title="Editar perfil" />
       </li>
       <li>
       <div className="container_theme" onClick={(e) => e.stopPropagation()}>
@@ -52,7 +59,7 @@ export function DropdownContent() {
       </div>
       </li>
       <li className="desktop_logout">
-        <div onClick={signOut}>
+        <div onClick={handleSignOut}>
           <LogoutSVG className="svg_logout"/>
           <p>Sair</p>
         </div>

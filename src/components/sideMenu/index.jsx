@@ -10,6 +10,7 @@ import { useNavigation } from '../../hooks/useNavigate';
 import { Footer } from '../Footer'
 import { useContext } from 'react';
 import { MenuContext } from '../../context/MenuContext'
+import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 
 export function SideMenu(){
@@ -18,13 +19,16 @@ export function SideMenu(){
     const { menuIsOpen, toggleMenu } = useContext(MenuContext);
 
     // Obtenha os métodos de navegação do hook de navegação
-    const { goToHomePage, goNewDishePage } = useNavigation();
+    const { goToHomePage, goNewDishePageMobile } = useNavigation();
 
     function handleSignOut(){
       signOut();
       goToHomePage();
-      toggleMenu();
+      if (menuIsOpen){
+        toggleMenu();
+      }
     }
+
     return(
         <Container data-menu-is-open={menuIsOpen}>
           <Header>
@@ -45,7 +49,7 @@ export function SideMenu(){
                   <>
                     <ButtonText
                       title="Novo prato"
-                      onClick={goNewDishePage}
+                      onClick={goNewDishePageMobile}
                     />
                     <ButtonText
                       title="Usuários"
@@ -60,7 +64,7 @@ export function SideMenu(){
                   <>
                     <ButtonText
                       title="Novo prato"
-                      onClick={goNewDishePage}
+                      onClick={goNewDishePageMobile}
                     />
                     <ButtonText
                       title="Sair"

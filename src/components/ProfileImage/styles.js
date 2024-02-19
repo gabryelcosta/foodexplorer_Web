@@ -5,6 +5,7 @@ export const Container = styled.div`
   position: relative; // Adicione esta linha
   border: none;
   background: transparent;
+  cursor: pointer;
 `
 
 export const ButtonDropDown = styled.div`

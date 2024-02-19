@@ -36,73 +36,53 @@ export function DetailsDishes(){
               <div className="details_image">
                 <img src={imagemPrato} alt="" />
               </div>
-              <div className="details_text">
-                <h2>Salada Ravanello</h2>
-                <p>Rabanetes, folhas verdes e molho agridoce salpicados com gergelim.</p>
+              <div className="details_descriptions">
+                <div className="details_text">
+                  <h2>Salada Ravanello</h2>
+                  <p>Rabanetes, folhas verdes e molho agridoce salpicados com gergelim.</p>
+                </div>
+                <div className="details_tag">
+                  <Tag title="alface" />
+                  <Tag title="cebola" />
+                  <Tag title="pão naan" />
+                  <Tag title="pepino" />
+                  <Tag title="rabanete" />
+                  <Tag title="tomate" />
+                </div>
+                <div className="details_buttons">
+                  <Stepper />
+                  <Button className="btn_order">
+                    <Receipt />
+                    <span>pedir ∙ R$ 25,00</span>
+                  </Button>
               </div>
-              <div className="details_tag">
-                <Tag title="alface" />
-                <Tag title="cebola" />
-                <Tag title="pão naan" />
-                <Tag title="pepino" />
-                <Tag title="rabanete" />
-                <Tag title="tomate" />
               </div>
-            </div>
-            <div className="details_buttons">
-              <Stepper />
-              <Button className="btn_order">
-                <Receipt />
-                <span>pedir ∙ R$ 25,00</span>
-              </Button>
             </div>
           </>
           }
-          {[USER_ROLE.SALE].includes(user.role) &&
+          {[USER_ROLE.SALE, USER_ROLE.ADMIN].includes(user.role) &&
           <>
             <div className="details_content">
               <div className="details_image">
                 <img src={imagemPrato} alt="" />
               </div>
-              <div className="details_text">
-                <h2>Salada Ravanello</h2>
-                <p>Rabanetes, folhas verdes e molho agridoce salpicados com gergelim.</p>
+              <div className="details_descriptions">
+                <div className="details_text">
+                  <h2>Salada Ravanello</h2>
+                  <p>Rabanetes, folhas verdes e molho agridoce salpicados com gergelim.</p>
+                </div>
+                <div className="details_tag">
+                  <Tag title="alface" />
+                  <Tag title="cebola" />
+                  <Tag title="pão naan" />
+                  <Tag title="pepino" />
+                  <Tag title="rabanete" />
+                  <Tag title="tomate" />
+                </div>
+                <div className="details_buttons">
+                  <Button className="btn_order" title="Editar prato" onClick={goEditPage}/>
+                </div>
               </div>
-              <div className="details_tag">
-                <Tag title="alface" />
-                <Tag title="cebola" />
-                <Tag title="pão naan" />
-                <Tag title="pepino" />
-                <Tag title="rabanete" />
-                <Tag title="tomate" />
-              </div>
-            </div>
-            <div className="details_buttons">
-              <Button className="btn_order" title="Editar prato" onClick={goEditPage}/>
-            </div>
-          </>
-          }
-          {[USER_ROLE.ADMIN].includes(user.role) &&
-          <>
-            <div className="details_content">
-              <div className="details_image">
-                <img src={imagemPrato} alt="" />
-              </div>
-              <div className="details_text">
-                <h2>Salada Ravanello</h2>
-                <p>Rabanetes, folhas verdes e molho agridoce salpicados com gergelim.</p>
-              </div>
-              <div className="details_tag">
-                <Tag title="alface" />
-                <Tag title="cebola" />
-                <Tag title="pão naan" />
-                <Tag title="pepino" />
-                <Tag title="rabanete" />
-                <Tag title="tomate" />
-              </div>
-            </div>
-            <div className="details_buttons">
-              <Button className="btn_order" title="Editar prato" onClick={goEditPage}/>
             </div>
           </>
           }

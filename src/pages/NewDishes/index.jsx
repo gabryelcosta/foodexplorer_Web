@@ -38,53 +38,55 @@ export function NewDishes(){
           <div className="nav_text">
             <ButtonText icon={CaretLeft} title="voltar" onClick={goBack}/>
           </div>
-          <div className="edit_contet">
+          <div className="new_content">
             <h2>Novo prato</h2>
-            <label>
-                <span>Imagem do prato</span>
-                <Button>
-                  <UploadSVG />
-                  <span>Selecione imagem</span>
-                </Button>
-            </label>
-            <label>
-              <span>Nome</span>
-              <div className="container_label">
-                <Input
-                  placeholder="Ex.: Salada Ceasar"
+            <div className="content_label">
+              <label className="upload_label">
+                  <span>Imagem do prato</span>
+                  <Button>
+                    <UploadSVG />
+                    <span>Selecione imagem</span>
+                  </Button>
+              </label>
+              <label className="name_label">
+                <span>Nome</span>
+                <div className="container_label">
+                  <Input
+                    placeholder="Ex.: Salada Ceasar"
+                  />
+                </div>
+              </label>
+              <label className="category_label">
+                <span>Categoria</span>
+                <SelectComponent value={selectedOption} onChange={handleOptionChange} options={options} />
+              </label>
+              <label className="ingredients_label">
+                <span>Ingredientes</span>
+                <div className="container_tags">
+                  <TagMarcadores
+                    value="Pão Naan"
+                  />
+                  <TagMarcadores
+                    isNew
+                    placeholder="Nova Tag"
+                  />
+                </div>
+              </label>
+              <label>
+                <span>Preço</span>
+                <div className="container_label">
+                  <Input
+                    placeholder="R$ 00,00"
+                  />
+                </div>
+              </label>
+              <label className="textarea_label">
+                <span>Descrição</span>
+                <TextArea
+                  placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
                 />
-              </div>
-            </label>
-            <label>
-              <span>Categoria</span>
-              <SelectComponent value={selectedOption} onChange={handleOptionChange} options={options} />
-            </label>
-            <label>
-              <span>Ingredientes</span>
-              <div className="container_tags">
-                <TagMarcadores
-                  value="Pão Naan"
-                />
-                <TagMarcadores
-                  isNew
-                  placeholder="Nova Tag"
-                />
-              </div>
-            </label>
-            <label>
-              <span>Preço</span>
-              <div className="container_label">
-                <Input
-                  placeholder="R$ 00,00"
-                />
-              </div>
-            </label>
-            <label>
-              <span>Descrição</span>
-              <TextArea
-                placeholder="Fale brevemente sobre o prato, seus ingredientes e composição"
-              />
-            </label>
+              </label>
+            </div>
             <div className="btn_container">
               <Button title="Salvar alterações" className="btn_submit"/>
             </div>

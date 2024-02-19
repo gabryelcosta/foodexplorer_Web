@@ -38,53 +38,55 @@ export function EditDishes(){
           <div className="nav_text">
             <ButtonText icon={CaretLeft} title="voltar" onClick={goBack}/>
           </div>
-          <div className="edit_contet">
+            <div className="edit_content">
             <h2>Editar prato</h2>
-            <label>
-                <span>Imagem do prato</span>
-                <Button>
-                  <UploadSVG />
-                  <span>Selecione imagem para alterá-la</span>
-                </Button>
-            </label>
-            <label>
-              <span>Nome</span>
-              <div className="container_label">
-                <Input
-                  value="Salada César"
+            <div className="content_label">
+              <label className="upload_label">
+                  <span>Imagem do prato</span>
+                  <Button>
+                    <UploadSVG />
+                    <span>Selecione imagem</span>
+                  </Button>
+              </label>
+              <label className="name_label">
+                <span>Nome</span>
+                <div className="container_label">
+                  <Input
+                    placeholder="Ex.: Salada Ceasar"
+                  />
+                </div>
+              </label>
+              <label className="category_label">
+                <span>Categoria</span>
+                <SelectComponent value={selectedOption} onChange={handleOptionChange} options={options} />
+              </label>
+              <label className="ingredients_label">
+                <span>Ingredientes</span>
+                <div className="container_tags">
+                  <TagMarcadores
+                    value="Pão Naan"
+                  />
+                  <TagMarcadores
+                    isNew
+                    placeholder="Nova Tag"
+                  />
+                </div>
+              </label>
+              <label>
+                <span>Preço</span>
+                <div className="container_label">
+                  <Input
+                    placeholder="R$ 00,00"
+                  />
+                </div>
+              </label>
+              <label className="textarea_label">
+                <span>Descrição</span>
+                <TextArea
+                  placeholder="A Salada César é uma opção refrescante para o verão."
                 />
-              </div>
-            </label>
-            <label>
-              <span>Categoria</span>
-              <SelectComponent value={selectedOption} onChange={handleOptionChange} options={options} />
-            </label>
-            <label>
-              <span>Ingredientes</span>
-              <div className="container_tags">
-                <TagMarcadores
-                  value="Pão Naan"
-                />
-                <TagMarcadores
-                  isNew
-                  placeholder="Nova Tag"
-                />
-              </div>
-            </label>
-            <label>
-              <span>Preço</span>
-              <div className="container_label">
-                <Input
-                  value="R$ 40,00"
-                />
-              </div>
-            </label>
-            <label>
-              <span>Descrição</span>
-              <TextArea
-                value="A Salada César é uma opção refrescante para o verão."
-              />
-            </label>
+              </label>
+            </div>
             <div className="btn_container">
               <Button title="Excluir prato" className="btn_remove"/>
               <Button title="Salvar alterações" className="btn_submit"/>

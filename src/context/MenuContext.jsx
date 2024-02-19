@@ -1,6 +1,7 @@
 // MenuContext.js
 import { createContext, useState } from 'react';
 
+
 export const MenuContext = createContext();
 
 export const MenuProvider = ({ children }) => {

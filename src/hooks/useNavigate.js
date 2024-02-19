@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { MenuContext } from '../context/MenuContext';
+import { DEVICE_BREAKPOINTS } from "../styles/deviceBreakpoints";
+
 
 // Função personalizada para navegação
 export function useNavigation(){
   // Utiliza o hook useNavigate do react-router-dom
   const navigate = useNavigate();
-  const { toggleMenu } = useContext(MenuContext);
+  const { toggleMenu, toggleDropdown } = useContext(MenuContext);
+
 
   // Função para voltar para a página anterior
   function goBack(){
@@ -16,7 +19,10 @@ export function useNavigation(){
   // Função para ir para a página de cadastro
   function goRegisterPage(){
     navigate('/cadastro');
+
+    if (window.matchMedia("(min-width: 768px)").matches) {
     toggleMenu();
+    }
   }
 
   // Função para ir para a página inicial
@@ -28,6 +34,16 @@ export function useNavigation(){
   function goProfilePage(event){
     event.stopPropagation();
     navigate('/perfil');
+
+  // Verifica se a tela tem pelo menos 768px de largura
+  if (window.matchMedia(`(min-width: ${DEVICE_BREAKPOINTS.MD})`).matches) {
+    // Se a tela for grande, chama toggleDropdown
+    toggleDropdown();
+  } else {
+    // Se a tela for pequena, chama toggleMenu
+    toggleMenu();
+    toggleDropdown();
+  }
   }
 
     // Função para ir para a página de edição do prato
@@ -38,6 +54,12 @@ export function useNavigation(){
     // Função para ir para a página de novo prato
     function goNewDishePage(){
       navigate('/novoprato');
+    }
+
+    // Função para ir para a página de novo prato
+    function goNewDishePageMobile(){
+      navigate('/novoprato');
+      toggleMenu();
     }
 
     function goToDetailsDishe(){
@@ -53,5 +75,6 @@ export function useNavigation(){
     goEditPage,
     goNewDishePage,
     goToDetailsDishe,
+    goNewDishePageMobile,
   };
 }

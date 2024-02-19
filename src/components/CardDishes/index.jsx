@@ -22,9 +22,12 @@ const CardPrato = ({ nome, valor, role }) => {
       <div className={role === USER_ROLE.USUARIO ? "card_description" : "card_description_admin"}>
         <img src={imagemBanner} alt="Imagem de biscoitos e frutas." />
         <h3 onClick={goToDetailsDishe}>{nome} {">"}</h3>
+        <p className="food_description">Descrição do patro.</p>
         <p>{valor}</p>
-        {role === USER_ROLE.USUARIO && <Stepper />}
-        {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir"/>}
+        <div className="card_actions">
+          {role === USER_ROLE.USUARIO && <Stepper />}
+          {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir"/>}
+        </div>
       </div>
     </div>
   </li>

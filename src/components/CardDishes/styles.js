@@ -50,6 +50,10 @@ export const CardContainer = styled.section`
       }
     }
 
+    .food_description {
+      display: none;
+    }
+
     .card_description {
       display: flex;
       flex-direction: column;
@@ -80,13 +84,18 @@ export const CardContainer = styled.section`
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_MONEY : theme.COLORS.TT_CARD_MONEY};
       }
 
-      .btn_inclusion {
-        width: 16rem;
-        height: 3rem;
-
+      .card_actions {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: column;
+        gap: 1rem;
+        .btn_inclusion {
+          width: 16rem;
+          height: 3rem;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
   }
@@ -99,7 +108,7 @@ export const CardContainer = styled.section`
       gap: 1rem;
 
       > img {
-        border-radius: 5rem;
+        border-radius: 8rem;
         width: 8rem;
         height: 8rem;
       }
@@ -111,6 +120,7 @@ export const CardContainer = styled.section`
         font-style: normal;
         line-height: 2.4rem;
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_TITLE : theme.COLORS.TT_CARD_TITLE};
+        cursor: pointer;
       }
 
       p {
@@ -132,10 +142,6 @@ export const CardContainer = styled.section`
     > h2 {
       font-size: 3.2rem;
       line-height: 4.5rem;
-    }
-
-    .splide__slide:not(.is-active) {
-      opacity: 0.5;  // ajuste este valor conforme necessário
     }
 
     .splide__list {
@@ -166,11 +172,31 @@ export const CardContainer = styled.section`
           }
         }
 
+        .food_description {
+          display: block;
+          font-size: 1.4rem;
+          font-weight: 400;
+          font-family: ${({ theme }) => theme.FONTS.FONTS_CARD_DESCRITPION};
+          line-height: 2.2rem;
+          text-align: center;
+          color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_FOOD_DESCRIPTION : theme.COLORS.TT_CARD_FOOD_DESCRIPTION};
+        }
+
         .card_description {
-          gap: 1.5rem;
+          gap: 2rem;
           > img {
             width: 17.6rem;
             height: 17.6rem;
+          }
+          .card_actions {
+            display: flex;
+            flex-direction: row;
+            gap: 1.6rem;
+
+            .btn_inclusion {
+              width: 9.2rem;
+              height: 4.8rem;
+            }
           }
         }
 
