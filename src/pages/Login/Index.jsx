@@ -39,30 +39,33 @@ export function Login(){
     <Container>
       <Header>
         <div>
-        <Polygon className="svg_poligon"/>
-        <h1>Food Explorer</h1>
+          <Polygon className="svg_poligon"/>
+          <h1>Food Explorer</h1>
         </div>
       </Header>
       <FormLogin>
-        <div className="inputs">
-          <label>
-            <p>Email</p>
-            <Input
-              type="email"
-              placeholder="Exemplo: exemplo@exemplo.com.br"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </label>
-          <label>
-            <p>Senha</p>
-            <Input
-              type="password"
-              placeholder="No mínimo 6 caracteres"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </label>
+          <div className="inputs">
+            <div className="inputs_title_desktop">
+              <h2>Faça Login</h2>
+            </div>
+            <label>
+              <p>Email</p>
+              <Input
+                type="email"
+                placeholder="Exemplo: exemplo@exemplo.com.br"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </label>
+            <label>
+              <p>Senha</p>
+              <Input
+                type="password"
+                placeholder="No mínimo 6 caracteres"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </label>
         </div>
         <Button className="btn_entrar" title="Entrar" onClick={handleLogin}/>
         <ButtonText title="Criar uma conta" onClick={goRegisterPage}/>

@@ -13,7 +13,7 @@ import LogoutSVG from '../Icons/LogoutSVG';
 
 export function DropdownContent() {
   const { dropdownIsActive, toggleDropdown } = useContext(MenuContext);
-  const { goProfilePage } = useNavigation();
+  const { goProfilePage, goToHomePage } = useNavigation();
   const { theme, toggleTheme } = useTheme();
   const { user, updateUser, signOut } = useAuth();
   const [userThemePreference, setUserThemePreference] = useState(user.theme_preference);
@@ -31,6 +31,7 @@ export function DropdownContent() {
 
   function handleSignOut(){
     signOut();
+    goToHomePage();
     if(dropdownIsActive){
       toggleDropdown();
     }

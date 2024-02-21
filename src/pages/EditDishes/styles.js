@@ -52,8 +52,6 @@ export const Content = styled.form`
         line-height: 4.4rem;
         font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_NAV_TITLE};
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_NAV_TITLE : theme.COLORS.TT_EDIT_NAV_TITLE};
-
-        margin-bottom: 2.4rem;
       }
 
     .content_label {
@@ -62,93 +60,104 @@ export const Content = styled.form`
       gap: 1.6rem;
       width: 100%;
 
-      label {
+      .primary_information, .secondary_information {
         display: flex;
         flex-direction: column;
         gap: 1.6rem;
 
-        .container_tags {
+        label {
           display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          width: 36.4rem;
-          height: 4.8rem;
-          padding: .8rem;
+          flex-direction: column;
           gap: 1.6rem;
-          border-radius: .8rem;
-          background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
 
-        div {
-          width: 100%;
-          max-width: 12.5rem;
-          height: 3.2rem;
-          border-radius: .8rem;
+          .container_tags {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 36.4rem;
+            padding: .8rem;
+            gap: 1.6rem;
+            border-radius: .8rem;
+            background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
 
-          input {
-            max-width: 9.5rem;
-            padding: .8rem 0rem .8rem 1.6rem;
-            font-size: 1.6rem;
-            font-weight: 400;
-            line-height: 1.6rem;
-            font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_TAG_TEXT};
-          }
+            div {
+              width: 100%;
+              max-width: 12.5rem;
+              height: 3.2rem;
+              border-radius: .8rem;
 
-          button {
-            width: 2rem;
-            height: 2rem;
-            background: transparent;
+              input {
+                max-width: 9.5rem;
+                padding: .8rem 0rem .8rem 1.6rem;
+                font-size: 1.6rem;
+                font-weight: 400;
+                line-height: 1.6rem;
+                font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_TAG_TEXT};
+              }
+
+              button {
+                width: 2rem;
+                height: 2rem;
+                background: transparent;
+              }
+            }
+
+            button {
+              background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
+            }
           }
         }
 
-          button {
-            background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
+          .container_label {
+            div {
+              padding: 1.5rem 1.4rem;
+              border-radius: .8rem;
+              background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
+
+              input {
+                font-size: 1.6rem;
+                font-weight: 400;
+                line-height: 1.6rem;
+                font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_INPUT_TEXT};
+                color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_INPUT_TEXT : theme.COLORS.TT_EDIT_INPUT_TEXT};
+              }
+            }
           }
+        }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .8rem;
+        height: 4.8rem;
+        background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
+
+        svg {
+          width: 2rem;
+          height: 2rem;
         }
       }
 
-    .container_label {
-      div {
-      padding: 1.5rem 1.4rem;
-      border-radius: .8rem;
-      background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
-
-        input {
+      span {
         font-size: 1.6rem;
         font-weight: 400;
+        font-weight: 400;
         line-height: 1.6rem;
-        font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_INPUT_TEXT};
-        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_INPUT_TEXT : theme.COLORS.TT_EDIT_INPUT_TEXT};
+        font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_CONTENT_SUBTITLE};
+        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_CONTENT_SUBTITLE : theme.COLORS.TT_EDIT_CONTENT_SUBTITLE};
+      }
+
+      .textarea_label {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+
+        textarea {
+          height: 17.2rem;
+          border-radius: .8rem;
         }
       }
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .8rem;
-      height: 4.8rem;
-      background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
-
-      svg {
-        width: 2rem;
-        height: 2rem;
-      }
-    }
-
-    span {
-      font-size: 1.6rem;
-      font-weight: 400;
-      font-weight: 400;
-      line-height: 1.6rem;
-      font-family: ${({ theme }) => theme.FONTS.FONTS_EDIT_CONTENT_SUBTITLE};
-      color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_EDIT_CONTENT_SUBTITLE : theme.COLORS.TT_EDIT_CONTENT_SUBTITLE};
-    }
-    }
-
-    textarea {
-      height: 17.2rem;
-      border-radius: .8rem;
     }
 
   .btn_container {
@@ -201,20 +210,46 @@ export const Content = styled.form`
       flex-direction: row;
       flex-wrap: wrap;
 
-      .name_label{
-        .container_label {
-          width: 20.5rem;
+      .primary_information {
+        width: 100%;
+        flex-direction: row;
+        .upload_label {
+          width: 30%;
+          button {
+            svg {
+              width: 1.5rem;
+              height: 1.5rem;
+            }
+            span {
+              font-size: 1.2rem;
+            }
+          }
+        }
+        .name_label{
+          width: 35%;
+          .container_label {
+            width: 100%;
+          }
+        }
+
+        .category_label {
+          width: 35%;
         }
       }
 
-      .category_label {
-        width: 20.7rem;
-      }
-
-      .ingredients_label {
-        width: 43.7rem;
-        .container_tags {
+      .secondary_information {
+        flex-direction: row;
+        width: 100%;
+        .ingredients_label {
           width: 100%;
+          .container_tags {
+            width: 100%;
+          }
+        }
+        label {
+          .container_label {
+            width: 100%;
+          }
         }
       }
 
@@ -248,25 +283,34 @@ export const Content = styled.form`
     }
 
     .content_label {
-      .name_label{
-        .container_label {
-          width: 36.4rem;
-        }
-      }
+      flex-direction: row;
+      flex-wrap: wrap;
 
-      .category_label {
-        width: 20.4rem;
-      }
-
-      .ingredients_label {
-        width: 59.3rem;
-        .container_tags {
-          width: 100%;
-        }
-      }
-
-      .textarea_label {
+      .primary_information {
         width: 100%;
+        flex-direction: row;
+        .upload_label {
+          width: 30%;
+          button {
+            svg {
+              width: 2rem;
+              height: 2rem;
+            }
+            span {
+              font-size: 1.6rem;
+            }
+          }
+        }
+        .name_label{
+          width: 40%;
+          .container_label {
+            width: 100%;
+          }
+        }
+
+        .category_label {
+          width: 30%;
+        }
       }
     }
 
@@ -274,10 +318,6 @@ export const Content = styled.form`
       justify-content: flex-end;
 
       .btn_submit {
-        width: 17.2rem;
-      }
-
-      .btn_remove {
         width: 17.2rem;
       }
     }
@@ -285,41 +325,17 @@ export const Content = styled.form`
 }
 
 @media (min-width: ${DEVICE_BREAKPOINTS.XL}) {
-  .new_content{
+  .edit_content{
     width: calc(100vw - 25rem);
 
     .content_label {
-      .name_label{
-        .container_label {
-          width: 60rem;
+      .primary_information {
+        .upload_label {
+          width: 20%;
         }
-      }
-
-      .category_label {
-        width: 33.4rem;
-      }
-
-      .ingredients_label {
-        width: 95.9rem;
-        .container_tags {
-          width: 100%;
+        .name_label{
+          width: 50%;
         }
-      }
-
-      .textarea_label {
-        width: 100%;
-      }
-    }
-
-    .btn_container {
-      justify-content: flex-end;
-
-      .btn_submit {
-        width: 17.2rem;
-      }
-
-      .btn_remove {
-        width: 17.2rem;
       }
     }
   }
@@ -327,40 +343,16 @@ export const Content = styled.form`
 
 @media (min-width: ${DEVICE_BREAKPOINTS.XXL}) {
   .edit_content{
-    width: calc(100vw - 25rem);
+    width: calc(100vw - 30rem);
 
     .content_label {
-      .name_label{
-        .container_label {
-          width: 90rem;
+      .primary_information {
+        .upload_label {
+          width: 15%;
         }
-      }
-
-      .category_label {
-        width: 47.3rem;
-      }
-
-      .ingredients_label {
-        width: 139.8rem;
-        .container_tags {
-          width: 100%;
+        .name_label{
+          width: 55%;
         }
-      }
-
-      .textarea_label {
-        width: 100%;
-      }
-    }
-
-    .btn_container {
-      justify-content: flex-end;
-
-      .btn_submit {
-        width: 17.2rem;
-      }
-
-      .btn_remove {
-        width: 17.2rem;
       }
     }
   }

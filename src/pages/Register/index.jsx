@@ -80,6 +80,9 @@ export function Register(){
       </Header>
       <FormLogin onSubmit={handleRegister}>
         <div className="inputs">
+          <div className="inputs_title_desktop">
+            <h2>Crie sua conta</h2>
+          </div>
           <label>
             <p>Seu Nome</p>
             <Input
