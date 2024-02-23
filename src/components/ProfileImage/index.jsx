@@ -1,5 +1,5 @@
 import { useEffect, useRef, useContext } from 'react';
-import { Container, ButtonDropDown } from './styles';
+import { Content, ButtonDropDown } from './styles';
 import { DropdownContent } from '../DropdownContent';
 import { MenuContext } from '../../context/MenuContext';
 import { UserAvatar } from '../UserAvatar';
@@ -9,6 +9,7 @@ export function ProfileImagem() {
   const { dropdownIsActive, toggleDropdown } = useContext(MenuContext);
 
   const handleProfileClick = (event) => {
+    event.preventDefault(); // Prevent default behavior
     event.stopPropagation();
     toggleDropdown();
   };
@@ -17,6 +18,7 @@ export function ProfileImagem() {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       if (dropdownIsActive) {
         setTimeout(() => {
+          event.preventDefault(); // Prevent default behavior
           toggleDropdown();
         }, 200); // Ajuste o atraso conforme necessário
       }
@@ -31,11 +33,11 @@ export function ProfileImagem() {
   }, [dropdownIsActive]);
 
   return (
-    <Container onClick={handleProfileClick}>
-      <UserAvatar />
-      <ButtonDropDown isOpen={dropdownIsActive} ref={dropdownRef} onClick={(e) => e.stopPropagation()}>
-        <DropdownContent />
-      </ButtonDropDown>
-    </Container>
+      <Content onClick={handleProfileClick}>
+        <UserAvatar />
+        <ButtonDropDown isOpen={dropdownIsActive} ref={dropdownRef} onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
+          <DropdownContent />
+        </ButtonDropDown>
+      </Content>
   );
 }

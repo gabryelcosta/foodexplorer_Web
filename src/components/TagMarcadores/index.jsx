@@ -2,7 +2,7 @@ import { FiPlus, FiX } from 'react-icons/fi'
 
 import { Container } from './styles'
 
-export function TagMarcadores({ isNew, value, onClick, ...rest}){
+export function TagMarcadores({ isNew, value, onClick, onRemove, ...rest}){
   return (
     <Container isNew={isNew}>
       <input
@@ -13,7 +13,7 @@ export function TagMarcadores({ isNew, value, onClick, ...rest}){
       />
       <button
       type="button"
-      onClick={onClick}
+      onClick={isNew ? onClick : onRemove}
       className={isNew ? 'button-add' : 'button-delete'}
       >
         {isNew ? <FiPlus /> : <FiX />}

@@ -70,6 +70,9 @@ export const Content = styled.form`
           flex-direction: column;
           gap: 1.6rem;
 
+          .upload_label {
+          }
+
           .container_tags {
             display: flex;
             align-items: center;
@@ -100,10 +103,6 @@ export const Content = styled.form`
                 height: 2rem;
                 background: transparent;
               }
-            }
-
-            button {
-              background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
             }
           }
         }
@@ -295,7 +294,6 @@ export const Content = styled.form`
           width: 30%;
         }
       }
-    }
 
     .btn_container {
       justify-content: flex-end;
@@ -305,6 +303,7 @@ export const Content = styled.form`
       }
     }
   }
+}
 }
 
 @media (min-width: ${DEVICE_BREAKPOINTS.XL}) {

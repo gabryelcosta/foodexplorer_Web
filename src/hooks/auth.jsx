@@ -13,7 +13,7 @@ function AuthProvider({ children }){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [profileUpdateMessage, setProfileUpdateMessage] = useState(null);
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
 // Função para realizar o login do usuário
 async function signIn({ email, password }){
@@ -51,39 +51,39 @@ async function signIn({ email, password }){
     setTheme(prefersDarkMode ? 'dark' : 'light');
   }
 
-  // Função para atualizar o perfil do usuário
-  async function updateProfile({ user, avatarFile }){
-    setError(null);
-    setProfileUpdateMessage(null);
-    try {
-      if(avatarFile){
-        const fileUploadForm = new FormData();
-        fileUploadForm.append("avatar", avatarFile);
+// Função para atualizar o perfil do usuário
+async function updateProfile({ user, avatarFile }){
+  setError(null);
+  setProfileUpdateMessage(null);
+  try {
+    if(avatarFile){
+      const fileUploadForm = new FormData();
+      fileUploadForm.append("avatar", avatarFile);
 
-        const response = await api.patch("/users/avatar", fileUploadForm);
-        user.avatar = response.data.avatar;
-      }
-
-      const response = await api.put("/users", user);
-
-      // Se a atualização for bem-sucedida, atualiza o estado e o local storage com os novos dados do usuário
-      if (response.status === 200 && response.data.message !== "Senha incorreta") {
-        setProfileUpdateMessage("Perfil atualizado com sucesso!")
-        setData({ user, token: data.token });
-        localStorage.setItem("@foodexplorer:user", JSON.stringify(user));
-      } else {
-        throw new Error("Não foi possível atualizar o perfil.");
-      }
-    } catch(error){
-      // Define o estado de erro com a mensagem de erro da resposta ou uma mensagem padrão
-      setError(error.response ? error.response.data.message : "Não foi possível atualizar o perfil.");
+      const response = await api.patch(`/users/${user.id}/avatar`, fileUploadForm);
+      user.avatar = response.data.avatar; // A resposta deve conter o nome do arquivo
+      updateUser(user);
     }
-  }
 
-  const updateUser = (updatedUser) => {
-    setData({ user: updatedUser });
-    localStorage.setItem("@foodexplorer:user", JSON.stringify(updatedUser));
-  };
+    const response = await api.put("/users", user);
+    // Se a atualização for bem-sucedida, atualiza o estado e o local storage com os novos dados do usuário
+    if (response.status === 200 && response.data.message !== "Senha incorreta") {
+      setProfileUpdateMessage("Perfil atualizado com sucesso!")
+      updateUser(user); // Atualiza o usuário no contexto de autenticação
+    } else {
+      throw new Error("Não foi possível atualizar o perfil.");
+    }
+  } catch(error){
+    // Define o estado de erro com a mensagem de erro da resposta ou uma mensagem padrão
+    setError(error.response ? error.response.data.message : "Não foi possível atualizar o perfil.");
+    console.log('Error:', error); // Log the error
+  }
+}
+
+const updateUser = (updatedUser) => {
+  setData({ user: updatedUser, token: data.token });
+  localStorage.setItem("@foodexplorer:user", JSON.stringify(updatedUser));
+};
 
 // Busca os dados do usuário do local storage quando o componente é montado
 useEffect(() => {

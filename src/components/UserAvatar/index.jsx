@@ -4,7 +4,7 @@ import { api } from '../../services/api';
 import avatarPlaceholder from '../../assets/avatarplaceholder.svg';
 import { Container } from './styles'
 
-export function UserAvatar({ avatarUrl }) {
+export function UserAvatar({ avatarUrl, onClick }) {
   const { user } = useAuth();
   const [avatar, setAvatar] = useState(null);
 

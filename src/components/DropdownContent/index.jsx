@@ -19,6 +19,7 @@ export function DropdownContent() {
   const [userThemePreference, setUserThemePreference] = useState(user.theme_preference);
 
   const handleToggleTheme = (event) => {
+    event.preventDefault(); // Prevent default behavior
     event.stopPropagation();
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setUserThemePreference(newTheme);
@@ -39,12 +40,13 @@ export function DropdownContent() {
 
   return dropdownIsActive ? (
     <Dropdown>
-      <li onClick={(e) => e.stopPropagation()}>
+      <li onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
           <ButtonText onClick={goProfilePage} title="Editar perfil" />
       </li>
       <li>
       <div className="container_theme" onClick={(e) => e.stopPropagation()}>
         <div onClick={(e) => {
+          e.preventDefault(); // Prevent default behavior
           e.stopPropagation();
           handleToggleTheme(e);
         }}>
@@ -52,6 +54,7 @@ export function DropdownContent() {
           <ToggleSwitch
             checked={userThemePreference === 'dark'}
             onChange={(e) => {
+              e.preventDefault(); // Prevent default behavior
               e.stopPropagation();
               handleToggleTheme(e);
             }}

@@ -98,6 +98,7 @@ export const Container = styled.header`
     .container_title {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 2rem;
 
       .container_svg_text {

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-
-export const Container = styled.div`
+export const Content = styled.div`
   position: relative; // Adicione esta linha
   border: none;
   background: transparent;
   cursor: pointer;
+  width: 5rem;
 `
 
 export const ButtonDropDown = styled.div`
