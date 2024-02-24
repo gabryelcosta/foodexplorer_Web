@@ -3,7 +3,7 @@ import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-rows: 11.4rem auto;
+  grid-template-rows: 11.4rem 1fr;
   grid-template-areas:
   "Header"
   "Main"

@@ -47,23 +47,24 @@ export function useNavigation(){
   }
 
     // Função para ir para a página de edição do prato
-    function goEditPage(){
-      navigate('/editar');
+    function goEditPage(dishId){
+      navigate(`/pratos/editar/${dishId}`);
     }
 
     // Função para ir para a página de novo prato
     function goNewDishePage(){
-      navigate('/novoprato');
+      navigate('/pratos/novoprato');
+      toggleDropdown();
     }
 
     // Função para ir para a página de novo prato
     function goNewDishePageMobile(){
-      navigate('/novoprato');
+      navigate('/pratos/novoprato');
       toggleMenu();
     }
 
-    function goToDetailsDishe(){
-      navigate('/detalhes');
+    function goToDetailsDishe(dishId){
+      navigate(`/pratos/detalhes/${dishId}`);
     }
 
   // Retorna todas as funções de navegação

@@ -3,72 +3,116 @@ import '@splidejs/splide/dist/css/splide.min.css';
 import { CardContainer } from './styles';
 import { useNavigation } from '../../hooks/useNavigate';
 import { ButtonText } from '../../components/ButtonText';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { USER_ROLE } from '../../utils/roles';
 import { Stepper } from '../Stepper';
 import { useAuth } from '../../hooks/auth';
 import { Button } from '../../components/Button';
-import imagemBanner from '../../assets/banner.png';
 import Heart from '../../components/Icons/HeartSVG';
 import Pencil from '../Icons/PencilSVG';
-
-const CardPrato = ({ nome, valor, role }) => {
-  const { goEditPage, goToDetailsDishe } = useNavigation();
-
-  return (
-  <li className="splide__slide">
-    <div className="card">
-      {role === USER_ROLE.USUARIO ? <ButtonText icon={Heart} className="svg_heart"/> : <ButtonText icon={Pencil} className="svg_pencil" onClick={goEditPage}/>}
-      <div className={role === USER_ROLE.USUARIO ? "card_description" : "card_description_admin"}>
-        <img src={imagemBanner} alt="Imagem de biscoitos e frutas." />
-        <h3 onClick={goToDetailsDishe}>{nome} {">"}</h3>
-        <p className="food_description">Descrição do patro.</p>
-        <p>{valor}</p>
-        <div className="card_actions">
-          {role === USER_ROLE.USUARIO && <Stepper />}
-          {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir"/>}
-        </div>
-      </div>
-    </div>
-  </li>
-  )
-};
+import { api } from '../../services/api';
+import slugify from 'slugify';
 
 export function CardPratos(){
   const { user } = useAuth();
-  const pratos = ['Refeição 1', 'Refeição 2', 'Refeição 3', 'Refeição 4', 'Refeição 5', 'Refeição 6'];
+  const [pratos, setPratos] = useState({});
+
+  const CardPrato = ({ id, nome, valor, role, image, descricao }) => {
+    const { goEditPage, goToDetailsDishe } = useNavigation();
+    const imageUrl = `${api.defaults.baseURL}/files/${image}`
+
+    const handleClick = (e) => {
+      e.preventDefault();
+      // Aqui você pode fazer o que quiser com o ID do prato
+      // Por exemplo, você pode chamar a função goToDetailsDishe
+      goToDetailsDishe(id); // Use 'id' em vez de 'prato.id'
+    };
+
+    return (
+    <li className="splide__slide">
+      <div className="card">
+        {role === USER_ROLE.USUARIO ? <ButtonText icon={Heart} className="svg_heart"/> : <ButtonText icon={Pencil} className="svg_pencil" onClick={() => goEditPage(id)}/>}
+        <div className={role === USER_ROLE.USUARIO ? "card_description" : "card_description_admin"}>
+          <img src={imageUrl} />
+          <h3 onClick={handleClick}>{nome} {">"}</h3>
+          <p className="food_description">{descricao}</p>
+          <p>R$ {valor}</p>
+          <div className="card_actions">
+            {role === USER_ROLE.USUARIO && <Stepper />}
+            {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir"/>}
+          </div>
+        </div>
+      </div>
+    </li>
+    )
+  };
 
   useEffect(() => {
-    const options = {
-      perPage: 2,
-      perMove: 1,
-      focus: 'center',
-      rewind: true,
-      arrows: false,
-      pagination: false,
+    const fetchPratos = async () => {
+      try {
+        const response = await api.get('dishes/');
+
+        // Crie um objeto para armazenar os pratos por categoria
+        const pratosPorCategoria = {};
+
+        // Preencha o objeto com os pratos
+        response.data.forEach(prato => {
+          // Se a categoria do prato ainda não está no objeto, adicione-a
+          if (!pratosPorCategoria[prato.category]) {
+            pratosPorCategoria[prato.category] = [];
+          }
+
+          // Adicione o prato à sua categoria
+          pratosPorCategoria[prato.category].push(prato);
+        });
+        setPratos(pratosPorCategoria);
+      } catch (error) {
+        console.error('Erro ao buscar pratos:', error);
+      }
     };
 
-    const splide = new Splide('.splide', options).mount();
-    const splidePratosPrincipais = new Splide('.card_pratos_principais .splide', options).mount();
-    const splidePratosSobremesa = new Splide('.card_pratos_sobremesa .splide', options).mount();
-
-
-    const handleResize = () => {
-      const shouldShowArrows = window.innerWidth >= 768;  // ajuste este valor conforme necessário
-      const shouldDisableDrag = window.innerWidth >= 768;  // ajuste este valor conforme necessário
-
-      splide.options = { ...splide.options, arrows: shouldShowArrows, drag: !shouldDisableDrag };
-      splidePratosPrincipais.options = { ...splidePratosPrincipais.options, arrows: shouldShowArrows, drag: !shouldDisableDrag };
-      splidePratosSobremesa.options = { ...splidePratosSobremesa.options, arrows: shouldShowArrows, drag: !shouldDisableDrag };
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize();  // chame a função uma vez para definir a opção `arrows` e `drag` corretamente na inicialização
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    fetchPratos();
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(pratos).length > 0) {
+      const options = {
+        perPage: 4,
+        perMove: 1,
+        rewind: true,
+        arrows: false,
+        pagination: false,
+      };
+
+      const splide = new Splide('.splide', options).mount();
+      const splidePratosSobremesa = new Splide('.card_pratos_sobremesa .splide', options).mount();
+      const splideBebidas = new Splide('.card_bebidas .splide', options).mount();
+
+      const handleResize = () => {
+        const shouldShowArrows = window.innerWidth >= 768;  // ajuste este valor conforme necessário
+        const shouldDisableDrag = window.innerWidth >= 768;  // ajuste este valor conforme necessário
+
+        const shouldShowArrowsRefeicoes = shouldShowArrows && pratos['Refeições'] && pratos['Refeições'].length > 4;
+        const shouldShowArrowsBebidas = shouldShowArrows && pratos['Bebida'] && pratos['Bebida'].length > 4;
+        const shouldShowArrowsSobremesa = shouldShowArrows && pratos['Sobremesa'] && pratos['Sobremesa'].length > 4;
+
+        splide.options = { ...splide.options, arrows: shouldShowArrowsRefeicoes, drag: !shouldDisableDrag };
+        splideBebidas.options = { ...splideBebidas.options, arrows: shouldShowArrowsBebidas, drag: !shouldDisableDrag };
+        splidePratosSobremesa.options = { ...splidePratosSobremesa.options, arrows: shouldShowArrowsSobremesa, drag: !shouldDisableDrag };
+      };
+
+      window.addEventListener('resize', handleResize);
+      handleResize();  // chame a função uma vez para definir a opção `arrows` e `drag` corretamente na inicialização
+
+      return () => {
+        splide.destroy();
+        splideBebidas.destroy();
+        splidePratosSobremesa.destroy();
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [pratos]);
+
 
   return(
     <CardContainer>
@@ -79,17 +123,7 @@ export function CardPratos(){
               <div className="splide">
               <div className="splide__track">
                 <ul className="splide__list">
-                  {pratos.map((prato, index) => <CardPrato key={index} nome={prato} valor="Valor" role={user.role} />)}
-                </ul>
-              </div>
-            </div>
-            </div>
-            <div className="card_pratos_principais">
-              <h2>Pratos principais</h2>
-              <div className="splide">
-              <div className="splide__track">
-                <ul className="splide__list">
-                  {pratos.map((prato, index) => <CardPrato key={index} nome={prato} valor="Valor" role={user.role} />)}
+                {pratos['Refeicao'] && pratos['Refeicao'].map((prato, index) => <CardPrato key={index} id={prato.id} nome={prato.name} image={prato.image} descricao={prato.description} valor={prato.price} role={user.role} />)}
                 </ul>
               </div>
             </div>
@@ -99,7 +133,17 @@ export function CardPratos(){
               <div className="splide">
               <div className="splide__track">
                 <ul className="splide__list">
-                  {pratos.map((prato, index) => <CardPrato key={index} nome={prato} valor="Valor" role={user.role} />)}
+                {pratos['Sobremesa'] && pratos['Sobremesa'].map((prato, index) => <CardPrato key={index} id={prato.id} nome={prato.name} image={prato.image} descricao={prato.description} valor={prato.price} role={user.role} />)}
+                </ul>
+              </div>
+            </div>
+            </div>
+            <div className="card_bebidas">
+              <h2>Bebidas</h2>
+              <div className="splide">
+              <div className="splide__track">
+                <ul className="splide__list">
+                {pratos['Bebida'] && pratos['Bebida'].map((prato, index) => <CardPrato key={index} id={prato.id} nome={prato.name} image={prato.image} descricao={prato.description} valor={prato.price} role={user.role} />)}
                 </ul>
               </div>
             </div>
@@ -113,17 +157,7 @@ export function CardPratos(){
                 <div className="splide">
                 <div className="splide__track">
                   <ul className="splide__list">
-                    {pratos.map((prato, index) => <CardPrato key={index} nome={prato} valor="Valor" role={user.role} />)}
-                  </ul>
-                </div>
-              </div>
-              </div>
-              <div className="card_pratos_principais">
-                <h2>Pratos principais</h2>
-                <div className="splide">
-                <div className="splide__track">
-                  <ul className="splide__list">
-                    {pratos.map((prato, index) => <CardPrato key={index} nome={prato} valor="Valor" role={user.role} />)}
+                  {pratos['Refeicao'] && pratos['Refeicao'].map((prato, index) => <CardPrato key={index} id={prato.id} nome={prato.name} image={prato.image} descricao={prato.description} valor={prato.price} role={user.role} />)}
                   </ul>
                 </div>
               </div>
@@ -133,7 +167,17 @@ export function CardPratos(){
                 <div className="splide">
                 <div className="splide__track">
                   <ul className="splide__list">
-                    {pratos.map((prato, index) => <CardPrato key={index} nome={prato} valor="Valor" role={user.role} />)}
+                  {pratos['Sobremesa'] && pratos['Sobremesa'].map((prato, index) => <CardPrato key={index} id={prato.id} nome={prato.name} image={prato.image} descricao={prato.description} valor={prato.price} role={user.role} />)}
+                  </ul>
+                </div>
+              </div>
+              </div>
+              <div className="card_bebidas">
+                <h2>Bebidas</h2>
+                <div className="splide">
+                <div className="splide__track">
+                  <ul className="splide__list">
+                  {pratos['Bebida'] && pratos['Bebida'].map((prato, index) => <CardPrato key={index} id={prato.id} nome={prato.name} image={prato.image} descricao={prato.description} valor={prato.price} role={user.role} />)}
                   </ul>
                 </div>
               </div>

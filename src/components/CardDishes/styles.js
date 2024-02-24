@@ -4,7 +4,7 @@ import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 export const CardContainer = styled.section`
   margin-top: 6rem;
 
-  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+  .card_refeicoes, .card_bebidas, .card_pratos_sobremesa {
   overflow: hidden; // esconde qualquer conteúdo que ultrapasse o contêiner
   margin: 0rem 2rem 2.3rem 2rem;
 
@@ -135,7 +135,7 @@ export const CardContainer = styled.section`
 }
 
 @media (min-width: ${DEVICE_BREAKPOINTS.MD}) {
-  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+  .card_refeicoes, .card_bebidas, .card_pratos_sobremesa {
     width: calc(100vw - 13rem);
     margin: 6.3rem auto;
 
@@ -153,7 +153,7 @@ export const CardContainer = styled.section`
       height: 46.2rem !important;
 
         > .card {
-          padding: 6.65rem;
+          padding: 5.5rem;
 
           .svg_heart {
             position: absolute;
@@ -178,8 +178,8 @@ export const CardContainer = styled.section`
           font-weight: 400;
           font-family: ${({ theme }) => theme.FONTS.FONTS_CARD_DESCRITPION};
           line-height: 2.2rem;
-          text-align: center;
           color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_CARD_FOOD_DESCRIPTION : theme.COLORS.TT_CARD_FOOD_DESCRIPTION};
+          text-align: center;
         }
 
         .card_description {
@@ -187,6 +187,12 @@ export const CardContainer = styled.section`
           > img {
             width: 17.6rem;
             height: 17.6rem;
+          }
+
+          h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            cursor: pointer;
           }
           .card_actions {
             display: flex;
@@ -209,8 +215,10 @@ export const CardContainer = styled.section`
           }
 
           h3 {
-            font-size: 2.4rem;
+            font-size: 1.8rem;
+            font-weight: 700;
             line-height: 3.36rem;
+            cursor: pointer;
           }
         }
     }
@@ -218,13 +226,22 @@ export const CardContainer = styled.section`
 }
 
 @media (min-width: ${DEVICE_BREAKPOINTS.LG}) {
-  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+  .card_refeicoes, .card_bebidas, .card_pratos_sobremesa {
     width: calc(100vw - 18rem);
+
+    .splide__slide {
+      .card_description, .card_description_admin {
+        h3 {
+          font-size: 2.4rem;
+          white-space: nowrap;
+        }
+      }
+    }
   }
 }
 
 @media (min-width: ${DEVICE_BREAKPOINTS.XL}) {
-  .card_refeicoes, .card_pratos_principais, .card_pratos_sobremesa {
+  .card_refeicoes, .card_bebidas, .card_pratos_sobremesa {
     width: calc(100vw - 22rem);
   }
 }

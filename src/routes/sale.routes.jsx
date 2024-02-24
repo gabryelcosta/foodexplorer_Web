@@ -3,9 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import { Home } from '../pages/Home';
 import { Profile } from '../pages/Profile';
 import { NotFound } from '../pages/NotFound'
-import { EditDishes } from '../pages/EditDishes';
-import { NewDishes } from '../pages/NewDishes';
-import { DetailsDishes } from '../pages/DetailsDishes';
+import { DetailsDishes } from '../pages/dishes/DetailsDishes';
+import { EditDishes } from '../pages/dishes/EditDishes';
+import { NewDishes } from '../pages/dishes/NewDishes';
 
 export function SaleRoutes(){
   return(

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
+import { DEVICE_BREAKPOINTS } from "../../../styles/deviceBreakpoints";
 
 export const Container = styled.div`
   display: grid;
@@ -51,8 +51,10 @@ export const Content = styled.main`
 
     .details_image{
       margin: 1.6rem;
-      width: 26.4rem;
-      height: 26.4rem;
+        img {
+          width: 26.4rem;
+          height: 26.4rem;
+        }
     }
 
     .details_descriptions{

@@ -2,9 +2,8 @@ import { useRef, useState } from 'react';
 import UploadSVG from '../../components/Icons/UploadSVG';
 import { Container } from './styles'
 
-export function FileButton({ onFileSelect, onDeleteFile }) {
+export function FileButton({ onFileSelect, onDeleteFile, fileName }) {
   const fileInputRef = useRef();
-  const [fileName, setFileName] = useState('Selecione imagem');
   const [fileSelected, setFileSelected] = useState(false);
 
   const handleButtonClick = (event) => {
@@ -16,7 +15,6 @@ export function FileButton({ onFileSelect, onDeleteFile }) {
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setFileName(file.name);
       setFileSelected(true);
       if (onFileSelect) {
         onFileSelect(event);
@@ -28,9 +26,8 @@ export function FileButton({ onFileSelect, onDeleteFile }) {
     event.preventDefault(); // Prevent default behavior
     event.stopPropagation(); // Prevent triggering file select
     fileInputRef.current.value = '';
-    setFileName('Selecione imagem');
     setFileSelected(false);
-    
+
     if (onDeleteFile) {
       onDeleteFile();
     }
@@ -47,9 +44,9 @@ export function FileButton({ onFileSelect, onDeleteFile }) {
       <div className="file_buttons">
         <div className="upload_button" onClick={handleButtonClick}>
           <UploadSVG />
-          <span>{fileName}</span>
+          <span>{fileName || 'Selecione imagem'}</span>
         </div>
-        {fileSelected && (
+        {(fileSelected || fileName) && (
           <div className="cancel_button" onClick={handleCancelUpload}>
             X
           </div>

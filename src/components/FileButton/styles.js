@@ -10,6 +10,7 @@ export const Container = styled.div`
   border-radius: .8rem;
   background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BT_EDIT_UPLOAD : theme.BACKGROUND.BT_EDIT_UPLOAD};
   color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_BUTTON : theme.COLORS.TT_BUTTON};
+  z-index: 1;
 
   .file_buttons {
     display: flex;

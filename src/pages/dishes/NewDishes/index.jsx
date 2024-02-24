@@ -1,18 +1,18 @@
 import { Container, Content } from './styles';
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
+import { Header } from '../../../components/Header';
+import { Footer } from '../../../components/Footer';
 import { useState } from 'react';
-import { useNavigation } from '../../hooks/useNavigate';
-import { SideMenu } from '../../components/sideMenu';
-import { ButtonText } from '../../components/ButtonText';
-import CaretLeft from '../../components/Icons/CaretLeftSVG';
-import { Input } from '../../components/Input';
-import { TagMarcadores } from '../../components/TagMarcadores';
-import { TextArea } from '../../components/TextArea';
-import { Button } from '../../components/Button';
-import { SelectComponent } from '../../components/InputSelect';
-import { api } from '../../services/api';
-import { FileButton } from '../../components/FileButton';
+import { useNavigation } from '../../../hooks/useNavigate';
+import { SideMenu } from '../../../components/sideMenu';
+import { ButtonText } from '../../../components/ButtonText';
+import CaretLeft from '../../../components/Icons/CaretLeftSVG';
+import { Input } from '../../../components/Input';
+import { TagMarcadores } from '../../../components/TagMarcadores';
+import { TextArea } from '../../../components/TextArea';
+import { Button } from '../../../components/Button';
+import { SelectComponent } from '../../../components/InputSelect';
+import { api } from '../../../services/api';
+import { FileButton } from '../../../components/FileButton';
 
 export function NewDishes(){
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -22,13 +22,14 @@ export function NewDishes(){
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState("");
   const [ingredientes, setIngredientes] = useState([]);
   const [novoIngrediente, setNovoIngrediente] = useState("");
+  const [displayFileName, setDisplayFileName] = useState("");
+  const [fileKey, setFileKey] = useState(Math.random());
   const options = [
     { value: 'Refeicao', label: 'Refeição' },
-    { value: 'PratoPrincipal', label: 'Prato Principal' },
     { value: 'Sobremesa', label: 'Sobremesa' },
+    { value: 'Bebida', label: 'Bebida' },
   ];
 
   const handleRemoveIngrediente = (ingredienteToRemove) => {
@@ -46,33 +47,19 @@ export function NewDishes(){
     setSelectedOption(event.target.value);
   };
 
-  const handleDeleteFile = async () => {
-    try {
-      // Faça uma requisição DELETE para o servidor para deletar a imagem
-      await api.delete(`/dishes/deleteImage/${imageName}`);
-
-      // Limpe o estado da imagem
+  function handleDeleteFile(){
       setImage(null);
-      setImageName("");
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      setDisplayFileName("");
+      setFileKey(Math.random());
+  }
 
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    setImage(file); // Armazene o arquivo da imagem, não apenas o nome do arquivo
+    setImage(file);
+    setDisplayFileName(file.name);
 
     const formData = new FormData();
     formData.append('imageFile', file);
-
-    try {
-      const response = await api.post('/dishes/uploadImage', formData);
-      const filename = response.data.filename;
-      setImageName(filename);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handleSubmit = async (event) => {
@@ -84,28 +71,32 @@ export function NewDishes(){
       return;
     }
 
-    // Crie um FormData
     const formData = new FormData();
 
-    // Anexe os dados do prato
     formData.append('name', name);
     formData.append('category', selectedOption);
     formData.append('price', price);
     formData.append('description', description);
     formData.append('ingredients', JSON.stringify(ingredientes));
 
-    // Anexe o arquivo de imagem
     formData.append('imageFile', image);
 
-    console.log('Sending the following data to the server:', formData);
-
     try {
-      const responseDish = await api.post('/dishes', formData, {
+      await api.post('/dishes', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Received the following response from the server:', responseDish.data);
+
+      setSelectedOption("");
+      setName("");
+      setPrice("");
+      setDescription("");
+      setIngredientes([]);
+      setNovoIngrediente("");
+      setImage(null);
+      setDisplayFileName("");
+      setFileKey(Math.random());
     } catch (error) {
       console.error(error);
     }
@@ -128,7 +119,7 @@ export function NewDishes(){
               <div className="primary_information">
                 <label className="upload_label">
                     <span>Imagem do prato</span>
-                    <FileButton onFileSelect={handleImageChange} onDeleteFile={handleDeleteFile}/>
+                    <FileButton key={fileKey} onFileSelect={handleImageChange} onDeleteFile={handleDeleteFile} fileName={displayFileName}/>
                 </label>
                 <label className="name_label">
                   <span>Nome</span>
@@ -186,7 +177,7 @@ export function NewDishes(){
               </label>
             </div>
             <div className="btn_container">
-              <Button type="submit" title="Salvar alterações" className="btn_submit"/>
+              <Button type="submit" title="Salvar prato" className="btn_submit"/>
             </div>
           </div>
         </Content>

@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Home } from '../pages/Home';
 import { Profile } from '../pages/Profile';
-import { DetailsDishes } from '../pages/DetailsDishes';
+import { DetailsDishes } from '../pages/dishes/DetailsDishes';
 import { NotFound } from '../pages/NotFound'
 
 export function UserRoutes(){

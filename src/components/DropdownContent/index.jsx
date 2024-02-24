@@ -13,7 +13,7 @@ import LogoutSVG from '../Icons/LogoutSVG';
 
 export function DropdownContent() {
   const { dropdownIsActive, toggleDropdown } = useContext(MenuContext);
-  const { goProfilePage, goToHomePage } = useNavigation();
+  const { goProfilePage, goToHomePage, goNewDishePage } = useNavigation();
   const { theme, toggleTheme } = useTheme();
   const { user, updateUser, signOut } = useAuth();
   const [userThemePreference, setUserThemePreference] = useState(user.theme_preference);
@@ -40,6 +40,9 @@ export function DropdownContent() {
 
   return dropdownIsActive ? (
     <Dropdown>
+      <li onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
+        <ButtonText onClick={goNewDishePage} title="Novo prato" />
+      </li>
       <li onClick={(e) => {e.stopPropagation(); e.preventDefault();}}>
           <ButtonText onClick={goProfilePage} title="Editar perfil" />
       </li>
