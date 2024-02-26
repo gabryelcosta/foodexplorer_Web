@@ -4,6 +4,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  
   input {
   font-family: ${({ theme }) => theme.FONTS.FONTS_CARD_STEPPER};
   font-size: 1.6rem;

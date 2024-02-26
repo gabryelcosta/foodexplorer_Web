@@ -98,7 +98,7 @@ export function CardPratos(){
           <p className="food_description">{descricao}</p>
           <p>R$ {totalPrice}</p>
           <div className="card_actions">
-            {role === USER_ROLE.USUARIO && <Stepper price={valor} onQuantityChange={handleQuantityChange}/>}
+            {role === USER_ROLE.USUARIO && <Stepper price={valor} onQuantityChange={handleQuantityChange} className="card_stepper"/>}
             {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir" onClick={handleIncludeClick}/>}
           </div>
         </div>
