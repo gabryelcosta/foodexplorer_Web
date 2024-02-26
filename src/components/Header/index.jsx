@@ -54,9 +54,9 @@ export function Header(){
     const fetchCartItems = async () => {
       try {
         const response = await api.get(`/shoppingcart/${user.id}`);
-        if (Array.isArray(response.data)) { // Verifica se response.data é um array
+        if (Array.isArray(response.data)) {
           setCartItems(response.data);
-          setCartItemCount(response.data.length); // Atualiza a quantidade de itens no carrinho
+          setCartItemCount(response.data.length);
         } else {
           console.error('A resposta da API não é um array:', response.data);
         }

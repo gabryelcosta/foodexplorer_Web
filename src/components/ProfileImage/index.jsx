@@ -9,7 +9,7 @@ export function ProfileImagem() {
   const { dropdownIsActive, toggleDropdown } = useContext(MenuContext);
 
   const handleProfileClick = (event) => {
-    event.preventDefault(); // Prevent default behavior
+    event.preventDefault();
     event.stopPropagation();
     toggleDropdown();
   };
@@ -18,9 +18,9 @@ export function ProfileImagem() {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       if (dropdownIsActive) {
         setTimeout(() => {
-          event.preventDefault(); // Prevent default behavior
+          event.preventDefault();
           toggleDropdown();
-        }, 200); // Ajuste o atraso conforme necessário
+        }, 200);
       }
     }
   };

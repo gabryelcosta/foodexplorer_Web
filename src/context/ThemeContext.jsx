@@ -11,7 +11,6 @@ export function ThemeProvider({ children }) {
     setTheme(newTheme);
   };
 
-  // Não renderiza os filhos até que o tema seja definido
   if (theme === null) {
     return null;
   }
@@ -26,6 +25,6 @@ export function ThemeProvider({ children }) {
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) throw new Error('useTheme must be used within a ThemeProvider');
-  const { theme, toggleTheme, setTheme } = context; // Adicione setTheme aqui
-  return { theme, toggleTheme, setTheme }; // E aqui
+  const { theme, toggleTheme, setTheme } = context;
+  return { theme, toggleTheme, setTheme };
 }

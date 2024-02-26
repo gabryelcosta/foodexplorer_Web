@@ -13,11 +13,9 @@ import { MenuContext } from '../../context/MenuContext'
 
 
 export function SideMenu(){
-    // Obtenha os dados do usuário do contexto de autenticação
     const { user, signOut } = useAuth();
     const { menuIsOpen, toggleMenu } = useContext(MenuContext);
 
-    // Obtenha os métodos de navegação do hook de navegação
     const { goToHomePage, goNewDishePageMobile, goToMyHistory, goToMyRequestSideMenu } = useNavigation();
 
     function handleSignOut(){

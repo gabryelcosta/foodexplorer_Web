@@ -7,8 +7,8 @@ export function FileButton({ onFileSelect, onDeleteFile, fileName }) {
   const [fileSelected, setFileSelected] = useState(false);
 
   const handleButtonClick = (event) => {
-    event.preventDefault(); // Prevent default behavior
-    event.stopPropagation(); // Prevent triggering click event twice
+    event.preventDefault();
+    event.stopPropagation();
     fileInputRef.current.click();
   };
 
@@ -23,8 +23,8 @@ export function FileButton({ onFileSelect, onDeleteFile, fileName }) {
   };
 
   const handleCancelUpload = (event) => {
-    event.preventDefault(); // Prevent default behavior
-    event.stopPropagation(); // Prevent triggering file select
+    event.preventDefault();
+    event.stopPropagation();
     fileInputRef.current.value = '';
     setFileSelected(false);
 
