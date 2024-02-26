@@ -4,6 +4,7 @@ export const Container = styled.span`
   font-size: 1.2rem;
   font-family: ${({ theme }) => theme.FONTS.FONTS_TAG};
   font-weight: 400;
+  text-transform: capitalize;
 
   height: 2.5rem;
 

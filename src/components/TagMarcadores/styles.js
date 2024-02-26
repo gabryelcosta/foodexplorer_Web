@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
 
@@ -13,6 +14,7 @@ export const Container = styled.div`
   padding-right: 1rem;
 
   > button {
+    justify-content: flex-end;
     border: none;
     background: none;
   }
@@ -25,16 +27,17 @@ export const Container = styled.div`
     color: ${({ theme }) => theme.COLORS.SVG_EDIT_TAG_ADD};
   }
 
-  > input {
-    padding: 1.6rem;
+    > input {
+      padding: 1.6rem;
+      text-transform: capitalize;
 
-    color: ${({ theme }) => theme.COLORS.TT_EDIT_TAG_TEXT};
-    background: transparent;
+      color: ${({ theme }) => theme.COLORS.TT_EDIT_TAG_TEXT};
+      background: transparent;
 
-    border: none;
+      border: none;
 
-    &::placeholder {
-      color: ${({ theme }) => theme.COLORS.TT_EDIT_TAG_TEXTADD};
+      &::placeholder {
+        color: ${({ theme }) => theme.COLORS.TT_EDIT_TAG_TEXTADD};
+      }
     }
-  }
 `

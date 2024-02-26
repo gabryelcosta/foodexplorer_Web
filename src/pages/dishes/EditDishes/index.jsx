@@ -14,19 +14,15 @@ import { SelectComponent } from '../../../components/InputSelect';
 import { api } from '../../../services/api';
 import { useParams } from 'react-router-dom';
 import { FileButton } from '../../../components/FileButton';
+import { Notification } from '../../../components/Notification';
+
 
 export function EditDishes(){
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const { goBack } = useNavigation();
   const [selectedOption, setSelectedOption] = useState("");
-  const options = [
-    { value: 'Refeicao', label: 'Refeição' },
-    { value: 'Sobremesa', label: 'Sobremesa' },
-    { value: 'Bebida', label: 'Bebida' },
-  ];
   const { id } = useParams();
   const [dish, setDish] = useState(null);
-  const [ingredients, setIngredients] = useState([]);
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -35,17 +31,41 @@ export function EditDishes(){
   const [displayFileName, setDisplayFileName] = useState("");
   const [fileKey, setFileKey] = useState(Math.random());
   const [image, setImage] = useState(null);
+  const [notification, setNotification] = useState(null);
+  const options = [
+    { value: 'Refeicao', label: 'Refeição' },
+    { value: 'Sobremesa', label: 'Sobremesa' },
+    { value: 'Bebida', label: 'Bebida' },
+  ];
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
+  };
+
+  const handleDeleteDish = () => {
+    api.delete(`/dishes/${id}`)
+      .then(() => {
+        // Trate a resposta da API aqui. Por exemplo, você pode redirecionar o usuário para outra página
+        goBack();
+      })
+      .catch(error => {
+        // Trate o erro aqui
+        console.error(error);
+      });
+  };
 
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleRemoveIngrediente = (ingredientToRemove) => {
-    setIngredients(ingredients.filter(ingredient => ingredient !== ingredientToRemove));
+  const handleRemoveIngrediente = (ingredienteToRemove) => {
+    setIngredientes(ingredientes.filter(ingrediente => ingrediente !== ingredienteToRemove));
   };
 
-  const handleAddIngrediente = () => {
+  const handleAddIngrediente = (event) => {
+    event.preventDefault();
     if (novoIngrediente) {
       setIngredientes([...ingredientes, novoIngrediente]);
       setNovoIngrediente("");
@@ -62,9 +82,6 @@ export function EditDishes(){
     const file = event.target.files[0];
     setImage(file);
     setDisplayFileName(file.name);
-
-    const formData = new FormData();
-    formData.append('imageFile', file);
   };
 
   useEffect(() => {
@@ -75,23 +92,55 @@ export function EditDishes(){
       setName(dishData.name);
       setDescription(dishData.description);
       setSelectedOption(dishData.category);
-      setIngredients(dishData.ingredients);
+      setIngredientes(dishData.ingredients);
       setPrice(dishData.price);
-      setDisplayFileName(dishData.image); // Adicione esta linha
+      setDisplayFileName(dishData.image);
     });
   }, [id]);
 
   const handleSaveChanges = () => {
-    api.patch(`/dishes/${id}`, {
-      name: name,
-      description: description,
-      category: selectedOption,
-      ingredients: ingredients,
-      price: price
+
+    const fields = {
+      'nome': { value: name, message: 'Por favor, preencha o campo nome antes de atualizar o prato' },
+      'opção selecionada': { value: selectedOption, message: 'Por favor, selecione uma opção antes de atualizar o prato' },
+      'preço': { value: price, message: 'Por favor, preencha o campo preço antes de atualizar o prato' },
+      'descrição': { value: description, message: 'Por favor, preencha o campo descrição antes de atualizar o prato' },
+      'ingredientes': { value: ingredientes.length > 0, message: 'Por favor, adicione pelo menos um ingrediente antes de atualizar o prato' },
+      'imagem': { value: displayFileName, message: 'Por favor, selecione uma imagem antes de atualizar o prato.' },
+    };
+
+    const areAllFieldsEmpty = Object.values(fields).every(field => !field.value);
+
+    if (areAllFieldsEmpty) {
+      showNotification('Por favor, preencha todos os campos antes de atualizar o prato.', "warning");
+      return;
+    }
+
+    for (let fieldName in fields) {
+      if (!fields[fieldName].value) {
+        showNotification(fields[fieldName].message, "warning");
+        return;
+      }
+    }
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('category', selectedOption);
+    formData.append('ingredients', JSON.stringify(ingredientes));
+    formData.append('price', price);
+    if (image) {
+      formData.append('imageFile', image);
+    }
+
+    api.patch(`/dishes/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     }).then(response => {
-      // Trate a resposta da API aqui
+      showNotification('Alterações salvas com sucesso!', "success");
     }).catch(error => {
-      // Trate o erro aqui
+      showNotification('Ocorreu um erro ao salvar as alterações. Por favor, tente novamente.', "error");
     });
   };
 
@@ -137,20 +186,21 @@ export function EditDishes(){
                 <label className="ingredients_label">
                   <span>Ingredientes</span>
                   <div className="container_tags">
-                  {ingredients.map((ingredient, index) => (
+                  {ingredientes.map((ingrediente, index) => (
                     <TagMarcadores
                       key={index}
-                      value={ingredient}
-                      onRemove={() => handleRemoveIngrediente(ingredient)}
+                      value={ingrediente}
+                      onRemove={() => handleRemoveIngrediente(ingrediente)}
                     />
                   ))}
                   <TagMarcadores
-                      isNew
-                      placeholder="Novo Ingrediente"
-                      value={novoIngrediente}
-                      onChange={e => setNovoIngrediente(e.target.value)}
-                      onClick={handleAddIngrediente}
-                    />
+                    isNew
+                    placeholder="Novo Ingrediente"
+                    value={novoIngrediente}
+                    onChange={e => setNovoIngrediente(e.target.value)}
+                    onClick={handleAddIngrediente}
+                    ingredientes={ingredientes} // Adicione esta linha
+                  />
                   </div>
                 </label>
                 <label>
@@ -174,12 +224,19 @@ export function EditDishes(){
               </label>
             </div>
             <div className="btn_container">
-              <Button title="Excluir prato" className="btn_remove"/>
+              <Button title="Excluir prato" className="btn_remove" onClick={handleDeleteDish}/>
               <Button title="Salvar alterações" className="btn_submit" onClick={handleSaveChanges}/>
             </div>
           </div>
         </Content>
       <Footer />
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+          />
+        )}
     </Container>
   )
 }

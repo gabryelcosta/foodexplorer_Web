@@ -18,7 +18,7 @@ export function App() {
         <GlobalStyles />
           <AuthProvider>
             <MenuProvider>
-              <Routes />
+                <Routes />
             </MenuProvider>
           </AuthProvider>
       </StyledThemeProvider>
@@ -28,6 +28,6 @@ export function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider>
-    <App />
+      <App />
   </ThemeProvider>
 );

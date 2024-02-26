@@ -23,6 +23,13 @@ export function DetailsDishes(){
   const { user } = useAuth();
   const { id: dishId } = useParams();
   const [imageUrl, setImageUrl] = useState(null);  // novo estado para a URL da imagem
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (newTotalPrice, newQuantity) => {
+    setTotalPrice(newTotalPrice);
+    setQuantity(newQuantity);
+  };
 
   useEffect(() => {
     // função para buscar os dados do prato
@@ -69,10 +76,10 @@ export function DetailsDishes(){
           <div className="details_buttons">
             {user.role === USER_ROLE.USUARIO &&
               <>
-                <Stepper />
+                <Stepper price={dish.price} onQuantityChange={handleQuantityChange}/>
                 <Button className="btn_order">
                   <Receipt />
-                  <span>pedir ∙ R$ {dish.price}</span>
+                  <span>pedir ∙ R$ {totalPrice}</span>
                 </Button>
               </>
             }

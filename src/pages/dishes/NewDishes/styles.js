@@ -84,14 +84,14 @@ export const Content = styled.form`
             background: ${({ theme }) => theme.title === 'light' ? theme.BACKGROUND.BG_EDIT_INPUT : theme.BACKGROUND.BG_EDIT_INPUT};
 
             div {
-              width: 100%;
-              max-width: 12.5rem;
+              width: auto;
               height: 3.2rem;
               border-radius: .8rem;
 
               input {
-                max-width: 9.5rem;
-                padding: .8rem 0rem .8rem 1.6rem;
+                width: auto;
+                min-width: 17rem;
+                padding: .8rem 1rem .8rem 1rem;
                 font-size: 1.6rem;
                 font-weight: 400;
                 line-height: 1.6rem;
@@ -230,6 +230,13 @@ export const Content = styled.form`
           width: 100%;
           .container_tags {
             width: 100%;
+
+            div {
+              input {
+                width: auto;
+                min-width: 20rem;
+              }
+            }
           }
         }
         label {

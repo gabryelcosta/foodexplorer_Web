@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  position: absolute;
-  bottom: 2.4rem;
-  animation: fade-in 1s ease-in-out forwards;
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
 .notification {
   display: flex;
@@ -35,16 +36,5 @@ export const Container = styled.div`
 .notification.warning {
   background-color: #ff9800;
   color: white;
-}
-
-@keyframes fade-in {
-  0% {
-    left: -100px;
-    opacity: 0;
-  }
-  100% {
-    left: 5rem;
-    opacity: 1;
-  }
 }
 `

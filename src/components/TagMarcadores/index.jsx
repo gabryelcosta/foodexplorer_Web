@@ -12,7 +12,6 @@ export function TagMarcadores({ isNew, value, onClick, onRemove, ...rest}){
         {...rest}
       />
       <button
-      type="button"
       onClick={isNew ? onClick : onRemove}
       className={isNew ? 'button-add' : 'button-delete'}
       >

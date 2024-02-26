@@ -6,6 +6,7 @@ export const Content = styled.div`
   background: transparent;
   cursor: pointer;
   width: 5rem;
+  z-index: 1000;
 `
 
 export const ButtonDropDown = styled.div`

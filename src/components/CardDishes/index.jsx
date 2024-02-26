@@ -11,7 +11,6 @@ import { Button } from '../../components/Button';
 import Heart from '../../components/Icons/HeartSVG';
 import Pencil from '../Icons/PencilSVG';
 import { api } from '../../services/api';
-import slugify from 'slugify';
 
 export function CardPratos(){
   const { user } = useAuth();
@@ -20,12 +19,40 @@ export function CardPratos(){
   const CardPrato = ({ id, nome, valor, role, image, descricao }) => {
     const { goEditPage, goToDetailsDishe } = useNavigation();
     const imageUrl = `${api.defaults.baseURL}/files/${image}`
+    const [totalPrice, setTotalPrice] = useState(valor);
+    const [quantity, setQuantity] = useState(1);
+
+    const handleQuantityChange = (newTotalPrice, newQuantity) => {
+      setTotalPrice(newTotalPrice);
+      setQuantity(newQuantity);
+    };
 
     const handleClick = (e) => {
       e.preventDefault();
-      // Aqui você pode fazer o que quiser com o ID do prato
-      // Por exemplo, você pode chamar a função goToDetailsDishe
-      goToDetailsDishe(id); // Use 'id' em vez de 'prato.id'
+      goToDetailsDishe(id);
+    };
+
+    const handleIncludeClick = async () => {
+      try {
+        const valorNumerico = parseFloat(valor.replace(',', '.'));
+
+        const totalValue = quantity * valorNumerico;
+
+        const response = await api.post('/shoppingcart', {
+          userId: user.id,
+          userName: user.name,
+          dishId: id,
+          dishName: nome,
+          quantity: quantity,
+          totalValue: totalValue,
+          dishPrice: valorNumerico,
+          image: image,
+        });
+
+        console.log('Pedido criado:', response.data);
+      } catch (error) {
+        console.error('Erro ao criar pedido:', error);
+      }
     };
 
     return (
@@ -36,10 +63,10 @@ export function CardPratos(){
           <img src={imageUrl} />
           <h3 onClick={handleClick}>{nome} {">"}</h3>
           <p className="food_description">{descricao}</p>
-          <p>R$ {valor}</p>
+          <p>R$ {totalPrice}</p>
           <div className="card_actions">
-            {role === USER_ROLE.USUARIO && <Stepper />}
-            {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir"/>}
+            {role === USER_ROLE.USUARIO && <Stepper price={valor} onQuantityChange={handleQuantityChange}/>}
+            {role === USER_ROLE.USUARIO && <Button className="btn_inclusion" title="Incluir" onClick={handleIncludeClick}/>}
           </div>
         </div>
       </div>
@@ -52,17 +79,12 @@ export function CardPratos(){
       try {
         const response = await api.get('dishes/');
 
-        // Crie um objeto para armazenar os pratos por categoria
         const pratosPorCategoria = {};
 
-        // Preencha o objeto com os pratos
         response.data.forEach(prato => {
-          // Se a categoria do prato ainda não está no objeto, adicione-a
           if (!pratosPorCategoria[prato.category]) {
             pratosPorCategoria[prato.category] = [];
           }
-
-          // Adicione o prato à sua categoria
           pratosPorCategoria[prato.category].push(prato);
         });
         setPratos(pratosPorCategoria);
@@ -77,8 +99,8 @@ export function CardPratos(){
   useEffect(() => {
     if (Object.keys(pratos).length > 0) {
       const options = {
-        perPage: 4,
-        perMove: 1,
+        perPage: 1,
+        perMove: 2,
         rewind: true,
         arrows: false,
         pagination: false,
@@ -89,12 +111,16 @@ export function CardPratos(){
       const splideBebidas = new Splide('.card_bebidas .splide', options).mount();
 
       const handleResize = () => {
-        const shouldShowArrows = window.innerWidth >= 768;  // ajuste este valor conforme necessário
-        const shouldDisableDrag = window.innerWidth >= 768;  // ajuste este valor conforme necessário
+        const shouldShowArrows = window.innerWidth >= 768 && window.innerWidth < 1024;
+        const shouldDisableDrag = window.innerWidth >= 768;
 
-        const shouldShowArrowsRefeicoes = shouldShowArrows && pratos['Refeições'] && pratos['Refeições'].length > 4;
-        const shouldShowArrowsBebidas = shouldShowArrows && pratos['Bebida'] && pratos['Bebida'].length > 4;
-        const shouldShowArrowsSobremesa = shouldShowArrows && pratos['Sobremesa'] && pratos['Sobremesa'].length > 4;
+        const hasEnoughDishesRefeicoes = pratos['Refeições'] && pratos['Refeições'].length > 4;
+        const hasEnoughDishesBebidas = pratos['Bebida'] && pratos['Bebida'].length > 4;
+        const hasEnoughDishesSobremesa = pratos['Sobremesa'] && pratos['Sobremesa'].length > 4;
+
+        const shouldShowArrowsRefeicoes = shouldShowArrows || (window.innerWidth >= 1024 && hasEnoughDishesRefeicoes);
+        const shouldShowArrowsBebidas = shouldShowArrows || (window.innerWidth >= 1024 && hasEnoughDishesBebidas);
+        const shouldShowArrowsSobremesa = shouldShowArrows || (window.innerWidth >= 1024 && hasEnoughDishesSobremesa);
 
         splide.options = { ...splide.options, arrows: shouldShowArrowsRefeicoes, drag: !shouldDisableDrag };
         splideBebidas.options = { ...splideBebidas.options, arrows: shouldShowArrowsBebidas, drag: !shouldDisableDrag };
@@ -102,7 +128,7 @@ export function CardPratos(){
       };
 
       window.addEventListener('resize', handleResize);
-      handleResize();  // chame a função uma vez para definir a opção `arrows` e `drag` corretamente na inicialização
+      handleResize();
 
       return () => {
         splide.destroy();

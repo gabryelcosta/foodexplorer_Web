@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container } from './styles';
 import minusSvg from '../../assets/Icons/Minus.svg';
 import plusSvg from '../../assets/Icons/Plus.svg';
 
-export function Stepper(){
+export function Stepper({ price, onQuantityChange }){
   const [quantity, setQuantity] = useState(1);
+  const numericPrice = Number(price.replace(',', '.'));
+
+  useEffect(() => {
+    const newTotalPrice = (quantity * numericPrice).toFixed(2);
+    onQuantityChange(newTotalPrice, quantity);
+  }, [quantity, numericPrice, onQuantityChange]);
 
   const increaseQuantity = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
+    if (quantity < 99) {
+      setQuantity(prevQuantity => prevQuantity + 1);
+    }
   };
 
   const decreaseQuantity = () => {

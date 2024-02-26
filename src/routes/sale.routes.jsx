@@ -12,9 +12,9 @@ export function SaleRoutes(){
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/perfil" element={<Profile />} />
-      <Route path="/detalhes" element={<DetailsDishes />} />
-      <Route path="/editar" element={<EditDishes />} />
-      <Route path="/novoprato" element={<NewDishes />} />
+      <Route path="/pratos/detalhes/:id" element={<DetailsDishes />} />
+      <Route path="/pratos/editar/:id" element={<EditDishes />} />
+      <Route path="/pratos/novoprato" element={<NewDishes />} />
 
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>

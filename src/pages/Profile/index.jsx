@@ -6,13 +6,14 @@ import CaretLeft from '../../components/Icons/CaretLeftSVG';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { useAuth } from '../../hooks/auth';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserAvatar } from '../../components/UserAvatar';
 import { FiUser, FiMail, FiLock, FiCamera } from 'react-icons/fi';
+import { Notification } from '../../components/Notification';
 
 
 export function Profile(){
-  const { user, updateProfile } = useAuth();
+  const { user, updateProfile, profileUpdateMessage, error } = useAuth();
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [passwordOld, setPasswordOld] = useState();
@@ -20,6 +21,12 @@ export function Profile(){
   const [avatar, setAvatar] = useState(user.avatarUrl);
   const [avatarFile, setAvatarFile] = useState(null);
   const { goBack } = useNavigation();
+  const [notification, setNotification] = useState(null);
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
+  };
 
   async function handleUpdate(){
     const updated = {
@@ -31,7 +38,23 @@ export function Profile(){
 
     const userUpdated = Object.assign(user, updated);
 
-    await updateProfile({ user: userUpdated, avatarFile })
+    try {
+      await updateProfile({ user: userUpdated, avatarFile });
+      if (profileUpdateMessage) {
+        showNotification(profileUpdateMessage, "success");
+      }
+    } catch(error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message === 'Senha antiga incorreta.') {
+          showNotification("Senha inválida. Verifique a senha antiga.", "error");
+          return;
+        } else {
+          showNotification(error.response.data.message, "error");
+        }
+      } else {
+        showNotification("Não foi possível atualizar o perfil.", "error");
+      }
+    }
   }
 
   function handleChangeAvatar(event){
@@ -41,6 +64,18 @@ export function Profile(){
     const imagePreview = URL.createObjectURL(file);
     setAvatar(imagePreview);
   }
+
+  useEffect(() => {
+    if (profileUpdateMessage) {
+      showNotification(profileUpdateMessage, "success");
+    }
+  }, [profileUpdateMessage]);
+
+  useEffect(() => {
+    if (error) {
+      showNotification(error, "error");
+    }
+  }, [error]);
 
   return (
     <Container>
@@ -90,6 +125,13 @@ export function Profile(){
         <Button title="Salvar" onClick={handleUpdate}/>
       </Form>
       <Footer />
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+          />
+        )}
     </Container>
   )
 }

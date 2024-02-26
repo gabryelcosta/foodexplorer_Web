@@ -45,7 +45,6 @@ export const Content = styled.main`
 
     .requests {
       display: flex;
-      align-items: center;
       justify-content: flex-start;
 
       img {
@@ -54,21 +53,77 @@ export const Content = styled.main`
         margin-right: 1.3rem;
       }
 
-      p {
+      .request_title {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+
+        .request_description {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: .5rem;
+
+          span {
+            font-size: 1.6rem;
+            font-weight: 500;
+            line-height: 3.2rem;
+            font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_SUBTITLE};
+            color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_SUBTITLE : theme.COLORS.TT_REQUEST_SUBTITLE};
+          }
+
+          p {
+            font-size: 2rem;
+            font-weight: 500;
+            line-height: 3.2rem;
+            font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_SUBTITLE};
+            color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_SUBTITLE : theme.COLORS.TT_REQUEST_SUBTITLE};
+          }
+
+          small {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 3.2rem;
+            font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_SUBTITLE};
+            color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_SUBTITLE : theme.COLORS.TT_REQUEST_SUBTITLE};
+          }
+        }
+
+        button {
+          font-size: 1.2rem;
+          font-weight: 400;
+          line-height: 1.9rem;
+          height: 4.8rem;
+          font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_ACTION};
+          color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_ACTION : theme.COLORS.TT_REQUEST_ACTION};
+          margin-top: -1.8rem;
+        }
+      }
+    }
+  }
+
+  .request_total {
+      display: flex;
+      margin-bottom: 4.7rem;
+
+      span {
         font-size: 2rem;
         font-weight: 500;
         line-height: 3.2rem;
         font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_SUBTITLE};
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_SUBTITLE : theme.COLORS.TT_REQUEST_SUBTITLE};
       }
+    }
+
+  .btn_next {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 0 3.7rem 5.8rem 0;
 
       button {
-        font-size: 1.2rem;
-        font-weight: 400;
-        line-height: 1.9rem;
-        font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_ACTION};
-        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_ACTION : theme.COLORS.TT_REQUEST_ACTION};
+        width: 21.6rem;
+        height: 4.8rem;
       }
     }
-  }
 `

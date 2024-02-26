@@ -178,7 +178,8 @@ export const Content = styled.main`
         justify-content: flex-start;
 
         .btn_order {
-          width: 13.1rem;
+          width: auto;
+          min-width: 13.1rem;
 
           svg {
             display: none;

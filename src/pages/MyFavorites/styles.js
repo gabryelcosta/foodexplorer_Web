@@ -70,30 +70,5 @@ export const Content = styled.main`
         color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_ACTION : theme.COLORS.TT_REQUEST_ACTION};
       }
     }
-
-    .request_total {
-      display: flex;
-      margin-bottom: 4.7rem;
-
-      span {
-        font-size: 2rem;
-        font-weight: 500;
-        line-height: 3.2rem;
-        font-family: ${({ theme }) => theme.FONTS.FONTS_REQUEST_SUBTITLE};
-        color: ${({ theme }) => theme.title === 'light' ? theme.COLORS.TT_REQUEST_SUBTITLE : theme.COLORS.TT_REQUEST_SUBTITLE};
-      }
-    }
-  }
-
-  .btn_next {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin: 0 3.7rem 5.8rem 0;
-
-      button {
-        width: 21.6rem;
-        height: 4.8rem;
-      }
-    }
+}
 `

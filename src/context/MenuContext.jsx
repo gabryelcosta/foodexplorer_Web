@@ -10,6 +10,9 @@ export const MenuProvider = ({ children }) => {
 
   const toggleMenu = () => {
     setMenuIsOpen(prevState => !prevState);
+    if (dropdownIsActive) {
+      setDropdownIsActive(false);
+    }
   };
 
   const toggleDropdown = () => {

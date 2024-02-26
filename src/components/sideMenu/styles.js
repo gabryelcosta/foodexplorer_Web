@@ -11,7 +11,7 @@ export const Container = styled.aside`
   width: 100vw;
   height: 100vh;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
 
   transform: translateX(-130%);
   transition: transform 0.3s ease-in-out;

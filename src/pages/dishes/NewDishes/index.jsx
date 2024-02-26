@@ -13,6 +13,7 @@ import { Button } from '../../../components/Button';
 import { SelectComponent } from '../../../components/InputSelect';
 import { api } from '../../../services/api';
 import { FileButton } from '../../../components/FileButton';
+import { Notification } from '../../../components/Notification';
 
 export function NewDishes(){
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -26,17 +27,24 @@ export function NewDishes(){
   const [novoIngrediente, setNovoIngrediente] = useState("");
   const [displayFileName, setDisplayFileName] = useState("");
   const [fileKey, setFileKey] = useState(Math.random());
+  const [notification, setNotification] = useState(null);
   const options = [
     { value: 'Refeicao', label: 'Refeição' },
     { value: 'Sobremesa', label: 'Sobremesa' },
     { value: 'Bebida', label: 'Bebida' },
   ];
 
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
+  };
+
   const handleRemoveIngrediente = (ingredienteToRemove) => {
     setIngredientes(ingredientes.filter(ingrediente => ingrediente !== ingredienteToRemove));
   };
 
-  const handleAddIngrediente = () => {
+  const handleAddIngrediente = (event) => {
+    event.preventDefault();
     if (novoIngrediente) {
       setIngredientes([...ingredientes, novoIngrediente]);
       setNovoIngrediente("");
@@ -57,18 +65,32 @@ export function NewDishes(){
     const file = event.target.files[0];
     setImage(file);
     setDisplayFileName(file.name);
-
-    const formData = new FormData();
-    formData.append('imageFile', file);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Verifique se um arquivo de imagem foi selecionado
-    if (!image) {
-      alert('Por favor, selecione um arquivo de imagem antes de enviar o formulário.');
+    const fields = {
+      'nome': { value: name, message: 'Por favor, preencha o campo nome antes de cadastrar um novo prato' },
+      'opção selecionada': { value: selectedOption, message: 'Por favor, selecione uma opção antes de cadastrar um novo prato' },
+      'preço': { value: price, message: 'Por favor, preencha o campo preço antes de cadastrar um novo prato' },
+      'descrição': { value: description, message: 'Por favor, preencha o campo descrição antes de cadastrar um novo prato' },
+      'ingredientes': { value: ingredientes.length > 0, message: 'Por favor, adicione pelo menos um ingrediente antes de cadastrar um novo prato' },
+      'imagem': { value: image, message: 'Por favor, selecione uma imagem antes de cadastrar um novo prato' },
+    };
+
+    const areAllFieldsEmpty = Object.values(fields).every(field => !field.value);
+
+    if (areAllFieldsEmpty) {
+      showNotification('Por favor, preencha todos os campos antes de cadastrar um novo prato', "warning");
       return;
+    }
+
+    for (let fieldName in fields) {
+      if (!fields[fieldName].value) {
+        showNotification(fields[fieldName].message, "warning");
+        return;
+      }
     }
 
     const formData = new FormData();
@@ -88,6 +110,7 @@ export function NewDishes(){
         },
       });
 
+      showNotification('Prato cadastrado com sucesso!', "success");
       setSelectedOption("");
       setName("");
       setPrice("");
@@ -182,6 +205,13 @@ export function NewDishes(){
           </div>
         </Content>
       <Footer />
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)}
+          />
+        )}
     </Container>
   )
 }

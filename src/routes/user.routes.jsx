@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Home } from '../pages/Home';
 import { Profile } from '../pages/Profile';
 import { DetailsDishes } from '../pages/dishes/DetailsDishes';
+import { MyRequest } from '../pages/MyRequest'
 import { NotFound } from '../pages/NotFound'
 
 export function UserRoutes(){
@@ -10,7 +11,8 @@ export function UserRoutes(){
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/perfil" element={<Profile />} />
-      <Route path="/detalhes" element={<DetailsDishes />} />
+      <Route path="/pratos/detalhes/:id" element={<DetailsDishes />} />
+      <Route path="/meupedido" element={<MyRequest />} />
 
       <Route path="*" exact={true} element={<NotFound />} />
     </Routes>

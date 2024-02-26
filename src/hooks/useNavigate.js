@@ -19,10 +19,6 @@ export function useNavigation(){
   // Função para ir para a página de cadastro
   function goRegisterPage(){
     navigate('/cadastro');
-
-    if (window.matchMedia("(min-width: 768px)").matches) {
-    toggleMenu();
-    }
   }
 
   // Função para ir para a página inicial
@@ -67,6 +63,10 @@ export function useNavigation(){
       navigate(`/pratos/detalhes/${dishId}`);
     }
 
+    function goToMyRequest(){
+      navigate('/meupedido');
+    }
+
   // Retorna todas as funções de navegação
   return {
     goBack,
@@ -77,5 +77,6 @@ export function useNavigation(){
     goNewDishePage,
     goToDetailsDishe,
     goNewDishePageMobile,
+    goToMyRequest,
   };
 }
