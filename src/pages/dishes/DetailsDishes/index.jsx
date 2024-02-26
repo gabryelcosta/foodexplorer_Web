@@ -58,7 +58,7 @@ export function DetailsDishes(){
           <div className='nav_text'>
             <ButtonText icon={CaretLeft} title="voltar" onClick={goToHomePage}/>
           </div>
-          {[USER_ROLE.USUARIO, USER_ROLE.SALE, USER_ROLE.ADMIN].includes(user.role) && dish &&
+          {[USER_ROLE.USUARIO, USER_ROLE.ADMIN].includes(user.role) && dish &&
       <div className="details_content">
         <div className="details_image">
           <img src={imageUrl} alt={dish.name} />
@@ -83,7 +83,7 @@ export function DetailsDishes(){
                 </Button>
               </>
             }
-            {[USER_ROLE.SALE, USER_ROLE.ADMIN].includes(user.role) &&
+            {[USER_ROLE.ADMIN].includes(user.role) &&
               <Button className="btn_order" title="Editar prato" onClick={() => goEditPage(dishId)}/>
             }
           </div>

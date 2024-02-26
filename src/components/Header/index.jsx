@@ -15,10 +15,40 @@ import { api } from '../../services/api';
 
 export function Header(){
   const { user } = useAuth();
-  const { toggleMenu } = useContext(MenuContext); // Obtenha toggleMenu do MenuContext
+  const { toggleMenu } = useContext(MenuContext);
   const { goToMyRequest } = useNavigation();
   const [cartItems, setCartItems] = useState([]);
-  const [cartItemCount, setCartItemCount] = useState(0); // Adiciona o estado para a contagem de itens
+  const [cartItemCount, setCartItemCount] = useState(0);
+  const [pendingOrdersCount, setPendingOrdersCount] = useState(0);
+
+  useEffect(() => {
+    const fetchPendingOrdersCount = async () => {
+      try {
+        const response = await api.get('/orders');
+        if (Array.isArray(response.data)) {
+          const pendingAndPreparingOrders = response.data.filter(order =>
+            order.status.toLowerCase().includes('pendente') ||
+            order.status.toLowerCase().includes('preparando')
+          );
+
+          const groupedByOrderCode = pendingAndPreparingOrders.reduce((acc, order) => {
+            acc[order.orderCode] = order;
+            return acc;
+          }, {});
+
+          setPendingOrdersCount(Object.keys(groupedByOrderCode).length);
+        } else {
+          console.error('A resposta da API não é um array:', response.data);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar a quantidade de pedidos pendentes:', error);
+      }
+    };
+
+    if (user.role === USER_ROLE.ADMIN) {
+      fetchPendingOrdersCount();
+    }
+  }, [user.role]);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -75,7 +105,7 @@ export function Header(){
         </div>
       </>
       }
-      {[USER_ROLE.ADMIN, USER_ROLE.SALE].includes(user.role) &&
+      {[USER_ROLE.ADMIN].includes(user.role) &&
       <>
       <div className="container_navbar">
         <Menu onClick={toggleMenu}>
@@ -86,17 +116,16 @@ export function Header(){
             <Polygon/>
             <div className="title">
               <h1>food explorer</h1>
-              {user.role === USER_ROLE.ADMIN && <p>Administrador</p>}
-              {user.role === USER_ROLE.SALE && <p>Vendedor</p>}
+              <p>Administrador</p>
             </div>
           </div>
           <div className="container_desktop">
             <div className="container_input">
               <Input icon={SearchSVG} placeholder="Busque por pratos ou ingredientes" className="input_search"/>
             </div>
-            <Button className="btn_container_desktop">
+            <Button className="btn_container_desktop" onClick={goToMyRequest}>
               <Receipt />
-              <p>Pedidos (0)</p>
+              <p>Pedidos ({pendingOrdersCount})</p>
             </Button>
             <ProfileImagem />
           </div>

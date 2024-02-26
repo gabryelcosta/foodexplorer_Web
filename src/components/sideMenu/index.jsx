@@ -10,7 +10,6 @@ import { useNavigation } from '../../hooks/useNavigate';
 import { Footer } from '../Footer'
 import { useContext } from 'react';
 import { MenuContext } from '../../context/MenuContext'
-import { DEVICE_BREAKPOINTS } from "../../styles/deviceBreakpoints";
 
 
 export function SideMenu(){
@@ -19,7 +18,7 @@ export function SideMenu(){
     const { menuIsOpen, toggleMenu } = useContext(MenuContext);
 
     // Obtenha os métodos de navegação do hook de navegação
-    const { goToHomePage, goNewDishePageMobile } = useNavigation();
+    const { goToHomePage, goNewDishePageMobile, goToMyHistory, goToMyRequestSideMenu } = useNavigation();
 
     function handleSignOut(){
       signOut();
@@ -52,19 +51,12 @@ export function SideMenu(){
                       onClick={goNewDishePageMobile}
                     />
                     <ButtonText
-                      title="Usuários"
+                      title="Pedidos"
+                      onClick={goToMyRequestSideMenu}
                     />
                     <ButtonText
-                      title="Sair"
-                      onClick={handleSignOut}
-                    />
-                  </>
-                }
-                {[USER_ROLE.SALE].includes(user.role) &&
-                  <>
-                    <ButtonText
-                      title="Novo prato"
-                      onClick={goNewDishePageMobile}
+                      title="Historico de pedidos"
+                      onClick={goToMyHistory}
                     />
                     <ButtonText
                       title="Sair"
@@ -79,6 +71,7 @@ export function SideMenu(){
                     />
                     <ButtonText
                       title="Histórico de pedidos"
+                      onClick={goToMyHistory}
                     />
                     <ButtonText
                       title="Sair"

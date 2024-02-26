@@ -11,10 +11,33 @@ import { Button } from '../../components/Button';
 import Heart from '../../components/Icons/HeartSVG';
 import Pencil from '../Icons/PencilSVG';
 import { api } from '../../services/api';
+import { Notification } from '../../components/Notification';
+
+const generateOrderCode = (userId) => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+
+  return `${year}${month}${day}-${randomNumber}-${userId}`;
+};
+
 
 export function CardPratos(){
   const { user } = useAuth();
   const [pratos, setPratos] = useState({});
+  const [notification, setNotification] = useState(null);
+  const [orderCodeData, setOrderCodeData] = useState({
+    orderCode: generateOrderCode(user.id),
+    generatedAt: Date.now(),
+  });
+
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
+  };
 
   const CardPrato = ({ id, nome, valor, role, image, descricao }) => {
     const { goEditPage, goToDetailsDishe } = useNavigation();
@@ -35,10 +58,21 @@ export function CardPratos(){
     const handleIncludeClick = async () => {
       try {
         const valorNumerico = parseFloat(valor.replace(',', '.'));
-
         const totalValue = quantity * valorNumerico;
+        const currentTime = Date.now();
+        const fifteenMinutesInMilliseconds = 15 * 60 * 1000;
 
-        const response = await api.post('/shoppingcart', {
+        let orderCode;
+
+        if (currentTime - orderCodeData.generatedAt > fifteenMinutesInMilliseconds) {
+          orderCode = generateOrderCode(user.id);
+          setOrderCodeData({ orderCode, generatedAt: currentTime });
+        } else {
+          orderCode = orderCodeData.orderCode;
+        }
+
+        await api.post('/shoppingcart', {
+          orderCode,
           userId: user.id,
           userName: user.name,
           dishId: id,
@@ -48,8 +82,7 @@ export function CardPratos(){
           dishPrice: valorNumerico,
           image: image,
         });
-
-        console.log('Pedido criado:', response.data);
+        showNotification('Prato adicionado!', "success")
       } catch (error) {
         console.error('Erro ao criar pedido:', error);
       }
@@ -210,6 +243,13 @@ export function CardPratos(){
               </div>
             </>
           }
+          {notification && (
+            <Notification
+              message={notification.message}
+              type={notification.type}
+              onClose={() => setNotification(null)}
+              />
+          )}
           </CardContainer>
   )
 }

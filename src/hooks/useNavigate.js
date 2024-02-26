@@ -67,6 +67,30 @@ export function useNavigation(){
       navigate('/meupedido');
     }
 
+    function goToMyRequestSideMenu(){
+      navigate('/meupedido');
+
+      if (window.matchMedia(`(max-width: ${DEVICE_BREAKPOINTS.MD})`).matches) {
+        // Se a tela for pequena, chama toggleMenu para fechar o menu
+        toggleMenu();
+      }
+      // Se a tela for grande, não faz nada
+    }
+
+
+    function goToMyHistory(){
+      navigate('/pedidos');
+
+      if (window.matchMedia(`(min-width: ${DEVICE_BREAKPOINTS.MD})`).matches) {
+        // Se a tela for grande, chama toggleDropdown
+        toggleDropdown();
+      } else {
+        // Se a tela for pequena, chama toggleMenu
+        toggleMenu();
+      }
+    }
+
+
   // Retorna todas as funções de navegação
   return {
     goBack,
@@ -78,5 +102,7 @@ export function useNavigation(){
     goToDetailsDishe,
     goNewDishePageMobile,
     goToMyRequest,
+    goToMyHistory,
+    goToMyRequestSideMenu,
   };
 }

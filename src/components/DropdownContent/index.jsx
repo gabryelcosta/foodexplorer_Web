@@ -13,7 +13,7 @@ import LogoutSVG from '../Icons/LogoutSVG';
 
 export function DropdownContent() {
   const { dropdownIsActive, toggleDropdown } = useContext(MenuContext);
-  const { goProfilePage, goToHomePage, goNewDishePage } = useNavigation();
+  const { goProfilePage, goToHomePage, goNewDishePage, goToMyHistory } = useNavigation();
   const { theme, toggleTheme } = useTheme();
   const { user, updateUser, signOut } = useAuth();
   const [userThemePreference, setUserThemePreference] = useState(user.theme_preference);
@@ -64,6 +64,11 @@ export function DropdownContent() {
           />
         </div>
       </div>
+      </li>
+      <li className="desktop_logout">
+        <div onClick={goToMyHistory}>
+          <p>Historico de Pedidos</p>
+        </div>
       </li>
       <li className="desktop_logout">
         <div onClick={handleSignOut}>
